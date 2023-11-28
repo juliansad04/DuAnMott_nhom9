@@ -148,12 +148,11 @@
     <a class="nav-link" href="./index.php?act=listcate">Danh mục</a>
     <a class="nav-link" href="./index.php?act=listproducts">Sản phẩm</a>
     <a class="nav-link" href="./index.php?act=listorder">Đơn hàng</a>
+    <a class="nav-link" href="./index.php?act=listorderonline">Đơn hàng online</a>
     <a class="nav-link" href="./index.php?act=listnews">Tin tức</a>
     <a class="nav-link" href="#">Thống Kê</a>
     <a class="nav-link" href="./index.php?act=logout">Đăng Xuất</a>
-
 </div>
-
 <div class="codengu">
     <h2>CHÀO MỪNG ĐẾN VỚI TRANG QUẢN TRỊ WEBSITE MIFGOIS</h2>
 </div>
@@ -166,30 +165,21 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <!-- lưu thông tin login -->
-                    <?php
-                    if (isset($_SESSION['admin']) && !empty($_SESSION['admin'])) {
-                        $username = $_SESSION['admin'];
-
-                        echo '<li class="nav-item"><a class="nav-link" href="#">Chào mừng: ' . $username . '</a></li>';
-                    }
-                    ?>
+                    Tên admin
                 </ul>
             </div>
-
         </div>
     </nav>
-
 </div>
+<!-- <script>
+function openNav() {
+    document.getElementById("sidebar").style.display = "block";
+}
 
-<script>
-    // function openNav() {
-    //     document.getElementById("sidebar").style.display = "block";
-    // }
-
-    // function closeNav() {
-    //     document.getElementById("sidebar").style.display = "none";
-    // }
-</script>
+function closeNav() {
+    document.getElementById("sidebar").style.display = "none";
+}
+</script> -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
