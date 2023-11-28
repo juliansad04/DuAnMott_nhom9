@@ -3,7 +3,7 @@
         <div class="card-header d-flex align-items-center justify-content-between">
             <h4>Danh sách sản phẩm</h4>
             <a href="index.php?act=addproduct" class="btn btn-success"><img
-                    src="../admin/content/images/add-plus-svgrepo-com.svg" alt="">THÊM</a>
+                        src="../admin/content/images/add-plus-svgrepo-com.svg" alt="">THÊM</a>
         </div>
         <div class="card-body">
             <table class="table table-bordered table-striped">
@@ -63,5 +63,6 @@
                 window.location.href = './index.php?act=deleteproduct&id=' + id;
             }
         });
+
     }
 </script>

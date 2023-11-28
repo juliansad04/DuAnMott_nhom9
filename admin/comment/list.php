@@ -1,4 +1,4 @@
-<div class="container-fluid" style="margin-left: 30px;">
+<div class="container-fluid" style="margin-left: 25px;">
     <div class="card mt-12" style="width: 1450px;">
         <div class="card-header d-flex align-items-center justify-content-between">
             <h4>Danh sách Bình luận</h4>
@@ -21,6 +21,7 @@
                     foreach ($listComments as $comment) {
                         echo "<tr>";
                         echo "<td>" . $comment['id'] . "</td>";
+
                         $productId = $comment['product_id'];
                         $product = new Product();
                         $productDetails = $product->getProductById($productId);
@@ -36,8 +37,7 @@
                         echo "<td>" . $comment['comment'] . "</td>";
                         echo "<td>" . $comment['comment_date'] . "</td>";
                         echo "<td class='text-center'>";
-                        echo "<a href='#' onclick='confirmDeleteComment(" . $_GET['id'] . "," . $comment['id'] . ")' class='btn btn-danger text-white'>Xoá</a>";
-
+                        echo "<a href='./index.php?act=deletecomment&id=". $_GET['id'] ."&idcmt=". $comment['id'] . "' class='btn btn-danger text-white'>Xoá</a>";
                         echo "</td>";
                         echo "</tr>";
                     }
@@ -50,20 +50,3 @@
         </div>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script>
-    function confirmDeleteComment(articleId, commentId) {
-        Swal.fire({
-            title: 'Bạn chắc chắn muốn xoá?',
-            text: 'Hành động này sẽ xoá vĩnh viễn dữ liệu!',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Có, xoá!',
-            cancelButtonText: 'Không, hủy bỏ'
-        }).then((result) => {
-            if (result.value) {
-                window.location.href = './index.php?act=deletecomment&id=' + articleId + '&idcmt=' + commentId;
-            }
-        });
-    }
-</script>

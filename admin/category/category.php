@@ -45,12 +45,27 @@ class Category
         $db->pdo_execute($query);
     }
 
+    public function hasProducts($categoryId)
+    {
+        $db = new connect();
+        $select = "SELECT COUNT(*) as count FROM products WHERE category_id=?";
+        $result = $db->pdo_query_one($select, $categoryId);
+
+        return $result['count'] > 0;
+    }
+
     function deleteCategory($id)
     {
         $db = new connect();
-        $query = "delete from category where id = '$id'";
-        $db->pdo_execute($query);
+        if ($this->hasProducts($id)) {
+            echo "Không thể xóa danh mục vì có sản phẩm thuộc danh mục này.";
+        } else {
+            $query = "DELETE FROM category WHERE id=?";
+            $db->pdo_execute($query, $id);
+            echo "Đã xóa danh mục thành công.";
+        }
     }
+
     public function getCategoryById($categoryId)
     {
         $db = new connect();

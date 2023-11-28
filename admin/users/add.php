@@ -17,23 +17,24 @@
     <form method="post" enctype="multipart/form-data" onsubmit="return validateAddUser()">
         <div class="form-group">
             <label for="username">Tài khoản</label>
-            <input type="text" class="form-control" id="username" name="username" required>
+            <input type="text" class="form-control" id="username" name="username" >
             <span id="usernameError" style="color: red;"></span>
         </div>
         <div class="form-group">
             <label for="password">Mật khẩu</label>
-            <input type="password" class="form-control" id="password" name="password" required>
+            <input type="password" class="form-control" id="password" name="password" >
             <span id="passwordError" style="color: red;"></span>
         </div>
         <div class="form-group">
             <label for="fullname">Họ và tên</label>
-            <input type="text" class="form-control" id="fullname" name="fullname" required>
+            <input type="text" class="form-control" id="fullname" name="fullname" >
             <span id="fullnameError" style="color: red;"></span>
         </div>
 
         <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" class="form-control" id="email" name="email" required>
+            <input type="email" class="form-control" id="email" name="email" >
+            <span id="emailError" style="color: red;"></span>
         </div>
 
         <div class="form-group">
@@ -43,8 +44,6 @@
                 <option value="1">Admin</option>
             </select>
         </div>
-
-
         <div class="form-group">
             <label for="avatar">Avatar</label>
             <input type="file" class="form-control-file" id="avatar" name="avatar" accept="image/*">

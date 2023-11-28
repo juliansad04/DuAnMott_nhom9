@@ -10,7 +10,7 @@
 
 <body>
 
-<div class="container mt-5" style="margin-left: 100px;">
+<div class="container mt-5">
     <h2 class="mb-4">Chỉnh sửa đơn hàng</h2>
 
     <?php
