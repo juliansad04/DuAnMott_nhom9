@@ -12,6 +12,7 @@
                     <th scope="col">Tiêu đề</th>
                     <th scope="col">Hình ảnh</th>
                     <th scope="col">Nội dung</th>
+                    <th scope="col">Người dùng</th>
                     <th scope="col" width='15%'>Chức năng</th>
                 </tr>
                 </thead>
@@ -30,6 +31,7 @@
                     }
 
                     echo "<td>" . $news['content_news'] . "</td>";
+                    echo "<td>" . $news['username'] . "</td>";
                     echo "<td class='d-flex justify-content-evenly'>";
                     echo "<a href='./index.php?act=updatenews&id=". $news['id'] ."' class='btn btn-info text-white'>Sửa</a>";
                     echo "<button type='button' onclick='confirmDelete(" . $news['id'] . ")' class='btn btn-danger text-white'>Xoá</button>";

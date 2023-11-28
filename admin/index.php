@@ -154,15 +154,16 @@ ob_start(); ?>
                 break;
             case 'addnews':
                 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['addNews'])) {
-                    $tmptitle_news = $_POST['title_news'];
-                    $tmpimg_news = $_FILES['img_news']['name'];
-
+                    $tmptitle_news = htmlspecialchars($_POST['title_news']);
+                    $tmpimg_news = htmlspecialchars($_FILES['img_news']['name']);
                     $upload_dir = './uploads/';
                     move_uploaded_file($_FILES['img_news']['tmp_name'], $upload_dir . $tmpimg_news);
-                    $tmpcontent_news = $_POST['content_news'];
+                    $tmpcontent_news = htmlspecialchars($_POST['content_news']);
+                    $id_user = 1;
                     $news = new news();
-                    $news->insertNews($tmptitle_news, $tmpimg_news, $tmpcontent_news);
+                    $news->insertNews($tmptitle_news, $tmpimg_news, $tmpcontent_news, $id_user);
                     header("Location: index.php?act=listnews");
+                    exit();
                 } else {
                     include './news/add.php';
                 }

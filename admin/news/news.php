@@ -8,7 +8,9 @@ class news
     function getNews()
     {
         $db = new connect();
-        $select = "select * from news";
+        $select = "SELECT news.*, users.username AS username
+                FROM news
+                LEFT JOIN users ON news.id_user = users.id";
         return $db->pdo_query($select);
     }
     public function checkUser($username, $password)
@@ -38,12 +40,11 @@ class news
         return $result;
     }
 
-    function insertNews($tmptitle_news, $tmpimg_news, $tmpcontent_news)
+    function insertNews($tmptitle_news, $tmpimg_news, $tmpcontent_news, $id_user)
     {
         $db = new connect();
-        $query = "INSERT INTO news(id, title_news, img_news, content_news) VALUES (NULL, ?, ?, ?)";
-
-        $newNewsId = $db->pdo_execute($query, $tmptitle_news, $tmpimg_news, $tmpcontent_news);
+        $query = "INSERT INTO news(id, title_news, img_news, content_news, id_user) VALUES (NULL, ?, ?, ?, ?)";
+        $newNewsId = $db->pdo_execute($query, $tmptitle_news, $tmpimg_news, $tmpcontent_news, $id_user);
         echo "Inserted news with ID: " . $newNewsId;
     }
 
@@ -81,5 +82,12 @@ class news
         $result = $db->pdo_query_one($select, $newsId);
 
         return $result;
+    }
+    function getNews_user()
+    {
+        $db = new connect();
+        $select = "SELECT news.*, id_user AS id_user FROM news
+                   LEFT JOIN users ON news.user_id = id_user";
+        return $db->pdo_query($select);
     }
 }
