@@ -33,7 +33,7 @@ $product = new Product();
         <div class="module_pro_all">
             <div class="box-title">
                 <div class="title-bar">
-                    <h1>Mì gói</h1>
+                    <h1>Mì ly</h1>
                     <a class="read_more" href="sanpham.php">
                         Xem thêm
                     </a>
@@ -103,7 +103,7 @@ $product = new Product();
         <div class="module_pro_all">
             <div class="box-title">
                 <div class="title-bar">
-                    <h1>Mì ly</h1>
+                    <h1>Mì tô</h1>
                     <a class="read_more" href="sanpham.php">
                         Xem thêm
                     </a>
@@ -174,7 +174,7 @@ $product = new Product();
         <div class="module_pro_all">
             <div class="box-title">
                 <div class="title-bar">
-                    <h1>Mì tô</h1>
+                    <h1>Mì gói</h1>
                     <a class="read_more" href="sanpham.php">
                         Xem thêm
                     </a>
