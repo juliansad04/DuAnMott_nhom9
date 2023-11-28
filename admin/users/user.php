@@ -40,21 +40,15 @@ class user
         return $result;
     }
 
-    function insertUser($tmpusername, $tmppassword, $tmpname, $tmpemail, $tmpavatar, $tmpaddress, $tmpphone)
+    function insertUser($tmpusername, $tmppassword, $tmpname, $tmpemail, $tmpavatar, $tmpaddress, $tmpphone, $tmprole)
     {
         $db = new connect();
-        $query = "INSERT INTO users(id, username, password, fullname, email, avatar, address, phone) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO users(id, username, password, fullname, email, avatar, address, phone, role) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        $newUserId = $db->pdo_execute($query, $tmpusername, $tmppassword, $tmpname, $tmpemail, $tmpavatar, $tmpaddress, $tmpphone);
-
-        if ($newUserId && isset($_SESSION['id'])) {
-            $cart = new Cart();
-            $createdAt = date("Y-m-d H:i:s");
-            $cart->createCart($newUserId , $createdAt);
-        }
-
+        $newUserId = $db->pdo_execute($query, $tmpusername, $tmppassword, $tmpname, $tmpemail, $tmpavatar, $tmpaddress, $tmpphone, $tmprole);
         echo "Inserted user with ID: " . $newUserId;
     }
+
 
     function registerUser($tmpusername, $tmppassword, $tmpname, $tmpemail, $tmpavatar, $tmpaddress, $tmpphone)
     {
@@ -75,15 +69,15 @@ class user
 
 
 
-    function updateUser($userId, $tmpusername, $tmppassword, $tmpname, $tmpemail, $tmpavatar, $tmpaddress, $tmpphone)
+    function updateUser($userId, $tmpusername, $tmppassword, $tmpname, $tmpemail, $tmpavatar, $tmpaddress, $tmpphone, $tmprole)
     {
         $db = new connect();
         if (empty($tmpavatar)) {
-            $query = "UPDATE users SET username=?, password=?, fullname=?, email=?, address=?, phone=? WHERE id=?";
-            $result = $db->pdo_execute($query, $tmpusername, $tmppassword, $tmpname, $tmpemail, $tmpaddress, $tmpphone, $userId);
+            $query = "UPDATE users SET username=?, password=?, fullname=?, email=?, address=?, phone=?, role=? WHERE id=?";
+            $result = $db->pdo_execute($query, $tmpusername, $tmppassword, $tmpname, $tmpemail, $tmpaddress, $tmpphone, $tmprole, $userId);
         } else {
-            $query = "UPDATE users SET username=?, password=?, fullname=?, email=?, avatar=?, address=?, phone=? WHERE id=?";
-            $result = $db->pdo_execute($query, $tmpusername, $tmppassword, $tmpname, $tmpemail, $tmpavatar, $tmpaddress, $tmpphone, $userId);
+            $query = "UPDATE users SET username=?, password=?, fullname=?, email=?, avatar=?, address=?, phone=?, role=? WHERE id=?";
+            $result = $db->pdo_execute($query, $tmpusername, $tmppassword, $tmpname, $tmpemail, $tmpavatar, $tmpaddress, $tmpphone, $tmprole, $userId);
         }
 
         return $result;
