@@ -26,10 +26,10 @@ if (isset($_GET['id'])) {
 
         <body>
 
-        <div class="container mt-5" style="margin-left: 100px;">
+        <div class="container mt-5">
             <h2 class="mb-4">Cập nhật sản phẩm</h2>
 
-            <form method="post" enctype="multipart/form-data" onsubmit="return validateUpdateProduct()">
+            <form method="post" enctype="multipart/form-data">
                 <input type="hidden" id="id" name="id" value="<?php echo $productId; ?>" required>
 
                 <div class="form-group">
@@ -63,20 +63,17 @@ if (isset($_GET['id'])) {
                 <div class="form-group">
                     <label for="price">Giá</label>
                     <input type="text" class="form-control" id="price" name="price" value="<?php echo $price; ?>" required>
-                    <span id="priceError" style="color: red;"></span>
                 </div>
 
                 <div class="form-group">
                     <label for="image">Hình ảnh</label>
                     <input type="file" class="form-control-file" id="image" name="image" accept="image/*">
-                    <span id="imageError" style="color: red;"></span>
                 </div>
 
                 <a href="index.php?act=listproducts" type="button" class="btn btn-danger">Hủy</a>
                 <button class="btn btn-primary" name="updateProduct">Cập nhật</button>
 
             </form>
-            <script src="/validate/validateproduct.js"></script>
         </div>
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

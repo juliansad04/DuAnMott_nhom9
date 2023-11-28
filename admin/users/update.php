@@ -35,29 +35,29 @@ if (isset($_GET['id'])) {
             <h2 class="mb-4">Sửa account</h2>
 
             <form method="post" enctype="multipart/form-data" onsubmit="return validateUpdateUser()">
-                <input type="text" type="hidden" class="form-control" id="userId" name="userId" value="<?php echo $userId; ?>" required>
+                <input type="text" type="hidden" class="form-control" id="userId" name="userId" value="<?php echo $userId; ?>" >
 
                 <div class="form-group">
                     <label for="username">Tài khoản</label>
-                    <input type="text" class="form-control" id="username" name="username" value="<?php echo $username; ?>" required>
+                    <input type="text" class="form-control" id="username" name="username" value="<?php echo $username; ?>" >
                     <span id="usernameError" style="color: red;"></span>
                 </div>
 
                 <div class="form-group">
                     <label for="password">Mật khẩu</label>
-                    <input type="password" class="form-control" id="password" name="password" value="<?php echo $password; ?>" required>
+                    <input type="password" class="form-control" id="password" name="password" value="<?php echo $password; ?>" >
                     <span id="passwordError" style="color: red;"></span>
                 </div>
 
                 <div class="form-group">
                     <label for="fullname">Họ và tên</label>
-                    <input type="text" class="form-control" id="fullname" name="fullname" value="<?php echo $fullname; ?>" required>
+                    <input type="text" class="form-control" id="fullname" name="fullname" value="<?php echo $fullname; ?>" >
                     <span id="fullnameError" style="color: red;"></span>
                 </div>
 
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" value="<?php echo $email; ?>" required>
+                    <input type="email" class="form-control" id="email" name="email" value="<?php echo $email; ?>" >
                     <span id="emailError" style="color: red;"></span>
                 </div>
 

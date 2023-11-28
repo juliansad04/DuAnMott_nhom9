@@ -8,6 +8,8 @@ class Product
     var $price = null;
     var $image = null;
 
+    var $category = null;
+
     function getProducts()
     {
         $db = new connect();
@@ -52,6 +54,18 @@ class Product
             $query = "UPDATE products SET name=?, description=?, price=?, category_id=? WHERE id=?";
             $db->pdo_execute($query, $tmpName, $tmpDescription, $tmpPrice, $categoryId, $tmpId);
         }
+    }
+
+    public function calculateTotalPrice($quantity, $price)
+    {
+        return $quantity * $price;
+    }
+
+    public function getProductsByCategory($categoryId)
+    {
+        $db = new connect();
+        $select = "SELECT * FROM products WHERE category_id=?";
+        return $db->pdo_query($select, $categoryId);
     }
 
 

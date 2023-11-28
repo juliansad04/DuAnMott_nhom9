@@ -32,7 +32,7 @@
                     echo "<td class='d-flex justify-content-evenly'>";
                     echo "<a href='./index.php?act=listorderdetail&id=" . $order['id'] . "' class='btn btn-info text-white'>Xem thông tin chi tiết</a>";
                     echo "<a href='./index.php?act=updateorder&id=" . $order['id'] . "' class='btn btn-warning text-white'>Cập nhật</a>";
-                    echo "<button type='button' onclick='confirmDelete(" . $order['id'] . ")' class='btn btn-danger text-white'>Xoá</button>";
+                    echo "<a href='./index.php?act=deleteorder&id=" . $order['id'] . "' class='btn btn-danger text-white'>Xoá</a>";
                     echo "</td>";
                     echo "</tr>";
                 }
@@ -42,20 +42,3 @@
         </div>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script>
-    function confirmDelete(id) {
-        Swal.fire({
-            title: 'Bạn chắc chắn muốn xoá?',
-            text: 'Hành động này sẽ xoá vĩnh viễn dữ liệu của đơn hàng này!',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Có, xoá!',
-            cancelButtonText: 'Không, hủy bỏ'
-        }).then((result) => {
-            if (result.value) {
-                window.location.href = './index.php?act=deleteorder&id=' + id;
-            }
-        });
-    }
-</script>

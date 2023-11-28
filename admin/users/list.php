@@ -3,7 +3,7 @@
         <div class="card-header d-flex align-items-center justify-content-between">
             <h4>User</h4>
             <a href="index.php?act=adduser" class="btn btn-success"><img
-                    src="../admin/content/images/add-plus-svgrepo-com.svg" alt="">THÊM</a>
+                        src="../admin/content/images/add-plus-svgrepo-com.svg" alt="">THÊM</a>
         </div>
         <div class="card-body">
             <table class="table table-bordered table-striped">
@@ -47,8 +47,6 @@
                     echo "</tr>";
                 }
                 ?>
-
-
                 </tr>
                 </tbody>
             </table>
@@ -60,7 +58,7 @@
     function confirmDelete(id) {
         Swal.fire({
             title: 'Bạn chắc chắn muốn xoá?',
-            text: 'Hành động này sẽ xoá vĩnh viễn dữ liệu (Đơn hàng, Bình luận sản phẩm) của Tài Khoản này!',
+            text: 'Hành động này sẽ xoá vĩnh viễn tài khoản,nếu tài khoản này đang tồn tại đơn thì không xóa được',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Có, xoá!',

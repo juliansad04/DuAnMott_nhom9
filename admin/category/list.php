@@ -1,3 +1,4 @@
+
 <div class="container-fluid" style="margin-left: 25px;">
     <div class="card mt-12" style="width: 1450px;">
         <div class="card-header d-flex align-items-center justify-content-between">
@@ -44,7 +45,12 @@
         }).then((result) => {
             if (result.value) {
                 window.location.href = './index.php?act=deletecate&id=' + id;
+
+            }else{
+
             }
         });
     }
 </script>
+
+

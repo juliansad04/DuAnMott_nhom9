@@ -16,12 +16,14 @@
     <form method="post" enctype="multipart/form-data" onsubmit="return validateProduct()">
         <div class="form-group">
             <label for="name">Tên sản phẩm</label>
-            <input type="text" class="form-control" id="name" name="name" required>
+            <input type="text" class="form-control" id="name" name="name">
+            <span id="nameError" style="color: red;"></span>
         </div>
 
         <div class="form-group">
             <label for="description">Mô tả</label>
-            <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+            <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+            <span id="descriptionError" style="color: red;"></span>
         </div>
 
         <div class="form-group">
@@ -41,13 +43,13 @@
         </div>
         <div class="form-group">
             <label for="price">Giá</label>
-            <input type="text" class="form-control" id="price" name="price" required>
+            <input type="text" class="form-control" id="price" name="price">
             <span id="priceError" style="color: red;"></span>
         </div>
 
         <div class="form-group">
             <label for="image">Hình ảnh</label>
-            <input type="file" class="form-control-file" id="image" name="image" accept="image/*" required>
+            <input type="file" class="form-control-file" id="image" name="image" accept="image/*">
             <span id="imageError" style="color: red;"></span>
         </div>
 

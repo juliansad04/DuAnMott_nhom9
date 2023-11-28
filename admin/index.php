@@ -10,6 +10,8 @@ ob_start(); ?>
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../admin/content/css/style.css">
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 </head>
 
 <body>
@@ -26,9 +28,10 @@ ob_start(); ?>
         include './orders/order.php';
         include './order_detail/order_detail.php';
         include './news/news.php';
-
+        include './online_order/online_order.php';
+        include './online_order_details/online_order_details.php';
+        include './carts/carts.php';
         $action = 'home';
-
         if (isset($_GET['act'])) {
             $action = $_GET['act'];
         }
@@ -110,7 +113,6 @@ ob_start(); ?>
 
                     $user = new user();
                     $user->insertUser($tmpusername, $tmppassword, $tmpname, $tmpemail, $tmpavatar, $tmpaddress, $tmpphone, $_POST['role']);
-
                     header("Location: index.php?act=listuser");
                 } else {
                     include './users/add.php';
@@ -132,7 +134,6 @@ ob_start(); ?>
 
                     $user = new user();
                     $user->updateUser($userId, $tmpusername, $tmppassword, $tmpname, $tmpemail, $tmpavatar, $tmpaddress, $tmpphone, $_POST['role']);
-
                     header("Location: index.php?act=listuser");
                 } else {
                     include './users/update.php';
@@ -256,6 +257,7 @@ ob_start(); ?>
             case 'listorder':
                 $order = new Order();
                 $user = new user();
+
                 $listOrders = $order->getAllOrders();
                 include './orders/list.php';
                 break;
@@ -264,14 +266,20 @@ ob_start(); ?>
                 $orderDetail = new OrderDetail();
                 $products = new Product();
                 $listproducts = $products->getProducts();
+
                 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['addOrder'])) {
+
                     $customer_name = $_POST["customer_name"];
                     $order_date = $_POST["order_date"];
                     $user_id = $_POST["user_id"];
                     $products_json = $_POST["selectedProducts"];
                     $selectedProducts = json_decode($products_json, true);
+
+
                     $orderId = $order->createOrder($user_id, $order_date, $customer_name);
+
                     if ($orderId) {
+
                         foreach ($selectedProducts as $product) {
                             $productId = $product['productId'];
                             $quantity = $product['quantity'];
@@ -358,6 +366,26 @@ ob_start(); ?>
                     $orderDetail = new OrderDetail();
                     $listOrderDetail = $orderDetail->getOrderDetailById($_GET['id']);
                     include './order_detail/list.php';
+                }
+                break;
+            case 'listorderonline':
+                $order = new OnlineOrder();
+                $user = new user();
+
+                $listOrderDetail = $order->getAllOnlineOrders();
+                if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateOrderOnline'])) {
+                    $id = $_POST['orderId'];
+                    $status = $_POST['status'];
+                    $order->updateOrderStatus($id, $status);
+                    header("Location: index.php?act=listorderonline");
+                }
+                include './online_order/list.php';
+                break;
+            case 'listorderonlinedetail':
+                if (isset($_GET['id'])) {
+                    $orderDetail = new OnlineOrderDetail();
+                    $listOrderDetail = $orderDetail->getOnlineOrderDetailById($_GET['id']);
+                    include './online_order_details/list.php';
                 }
                 break;
             default:

@@ -1,9 +1,9 @@
 <?php
-class connect
+class Connect
 {
     function pdo_get_connection()
     {
-        $dburl = "mysql:host=localhost;dbname=migoi;charset=utf8";
+        $dburl = "mysql:host=localhost;dbname=migoii;charset=utf8";
         $username = 'root';
         $password = '';
 
@@ -11,19 +11,7 @@ class connect
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return $conn;
     }
-    /* function pdo_execute($sql)
-    {
-        $sql_args = array_slice(func_get_args(), 1);
-        try {
-            $conn = $this->pdo_get_connection();
-            $stmt = $conn->prepare($sql);
-            $stmt->execute($sql_args);
-        } catch (PDOException $e) {
-            throw $e;
-        } finally {
-            unset($conn);
-        }
-    } */
+
     function pdo_execute($sql)
     {
         $sql_args = array_slice(func_get_args(), 1);

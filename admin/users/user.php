@@ -40,34 +40,77 @@ class user
         return $result;
     }
 
-    function insertUser($tmpusername, $tmppassword, $tmpname, $tmpemail, $tmpavatar, $tmpaddress, $tmpphone, $tmprole)
+    function insertUser($tmpusername, $tmppassword, $tmpname, $tmpemail, $tmpavatar, $tmpaddress, $tmpphone)
     {
         $db = new connect();
-        $query = "INSERT INTO users(id, username, password, fullname, email, avatar, address, phone, role) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO users(id, username, password, fullname, email, avatar, address, phone) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)";
 
-        $newUserId = $db->pdo_execute($query, $tmpusername, $tmppassword, $tmpname, $tmpemail, $tmpavatar, $tmpaddress, $tmpphone, $tmprole);
+        $newUserId = $db->pdo_execute($query, $tmpusername, $tmppassword, $tmpname, $tmpemail, $tmpavatar, $tmpaddress, $tmpphone);
+
+        if ($newUserId && isset($_SESSION['id'])) {
+            $cart = new Cart();
+            $createdAt = date("Y-m-d H:i:s");
+            $cart->createCart($newUserId , $createdAt);
+        }
+
         echo "Inserted user with ID: " . $newUserId;
     }
 
-    function updateUser($userId, $tmpusername, $tmppassword, $tmpname, $tmpemail, $tmpavatar, $tmpaddress, $tmpphone, $tmprole)
+    function registerUser($tmpusername, $tmppassword, $tmpname, $tmpemail, $tmpavatar, $tmpaddress, $tmpphone)
+    {
+        $db = new connect();
+
+        $tmpaddress = ($tmpaddress !== null) ? $tmpaddress : 'default_address';
+
+        $tmpphone = ($tmpphone !== null) ? $tmpphone : 'default_phone';
+
+        $query = "INSERT INTO users(id, username, password, fullname, email, avatar, address, phone, role) VALUES (NULL, ?, ?, ?, ?, COALESCE(?, 'path_to_default_avatar'), ?, ?, 0)";
+
+        $newUserId = $db->pdo_execute($query, $tmpusername, $tmppassword, $tmpname, $tmpemail, $tmpavatar, $tmpaddress, $tmpphone);
+
+        return $newUserId;
+    }
+
+
+
+
+
+    function updateUser($userId, $tmpusername, $tmppassword, $tmpname, $tmpemail, $tmpavatar, $tmpaddress, $tmpphone)
     {
         $db = new connect();
         if (empty($tmpavatar)) {
-            $query = "UPDATE users SET username=?, password=?, fullname=?, email=?, address=?, phone=?, role=? WHERE id=?";
-            $result = $db->pdo_execute($query, $tmpusername, $tmppassword, $tmpname, $tmpemail, $tmpaddress, $tmpphone, $tmprole, $userId);
+            $query = "UPDATE users SET username=?, password=?, fullname=?, email=?, address=?, phone=? WHERE id=?";
+            $result = $db->pdo_execute($query, $tmpusername, $tmppassword, $tmpname, $tmpemail, $tmpaddress, $tmpphone, $userId);
         } else {
-            $query = "UPDATE users SET username=?, password=?, fullname=?, email=?, avatar=?, address=?, phone=?, role=? WHERE id=?";
-            $result = $db->pdo_execute($query, $tmpusername, $tmppassword, $tmpname, $tmpemail, $tmpavatar, $tmpaddress, $tmpphone, $tmprole, $userId);
+            $query = "UPDATE users SET username=?, password=?, fullname=?, email=?, avatar=?, address=?, phone=? WHERE id=?";
+            $result = $db->pdo_execute($query, $tmpusername, $tmppassword, $tmpname, $tmpemail, $tmpavatar, $tmpaddress, $tmpphone, $userId);
         }
 
         return $result;
     }
+
+    public function hasOnlineOrders($userId)
+    {
+        $db = new Connect();
+        $select = "SELECT COUNT(*) as count FROM online_orders WHERE user_id=?";
+        $result = $db->pdo_query_one($select, $userId);
+
+        return $result['count'] > 0;
+    }
+
+
     function deleteUser($id)
     {
         $db = new connect();
-        $query = "delete from users where id = '$id'";
-        $db->pdo_execute($query);
+        if ($this->hasOnlineOrders($id)) {
+            echo "Không thể xóa người dùng vì có đơn hàng liên quan.";
+        } else {
+            $query = "DELETE FROM users WHERE id=?";
+            $db->pdo_execute($query, $id);
+            echo "Đã xóa người dùng thành công.";
+        }
     }
+
 
     public function getUserById($userId)
     {

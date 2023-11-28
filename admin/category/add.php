@@ -16,7 +16,7 @@
         <input type="hidden" id="username" name="username" value="">
         <div class="form-group">
             <label for="name">Tên danh mục</label>
-            <input type="text" class="form-control" id="name" name="name" required>
+            <input type="text" class="form-control" id="name" name="name">
             <span id="nameError" style="color: red;"></span>
         </div>
         <a href="index.php?act=listcate" type="button" class="btn btn-danger">Hủy</a>
