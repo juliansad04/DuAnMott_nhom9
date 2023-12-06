@@ -5,12 +5,12 @@ class news
     var $images = null;
     var $content_news = null;
 
+    var $id_user = null;
+
     function getNews()
     {
         $db = new connect();
-        $select = "SELECT news.*, users.username AS username
-                FROM news
-                LEFT JOIN users ON news.id_user = users.id";
+        $select = "select * from news";
         return $db->pdo_query($select);
     }
     public function checkUser($username, $password)
@@ -40,11 +40,12 @@ class news
         return $result;
     }
 
-    function insertNews($tmptitle_news, $tmpimg_news, $tmpcontent_news, $id_user)
+    function insertNews($tmptitle_news, $tmpimg_news, $tmpcontent_news, $tmpuser_id)
     {
         $db = new connect();
-        $query = "INSERT INTO news(id, title_news, img_news, content_news, id_user) VALUES (NULL, ?, ?, ?, ?)";
-        $newNewsId = $db->pdo_execute($query, $tmptitle_news, $tmpimg_news, $tmpcontent_news, $id_user);
+        $query = "INSERT INTO news(id, title_news, img_news, content_news, user_id) VALUES (NULL, ?, ?, ?, ?)";
+
+        $newNewsId = $db->pdo_execute($query, $tmptitle_news, $tmpimg_news, $tmpcontent_news, $tmpuser_id);
         echo "Inserted news with ID: " . $newNewsId;
     }
 
@@ -58,7 +59,7 @@ class news
             $query = "UPDATE news SET title_news=?, content_news=? WHERE id=?";
             $result = $db->pdo_execute($query, $tmptitle_news, $tmpcontent_news, $NewsId);
         } else {
-            $query = "UPDATE news SET title_news=?, img_news=?, content_news=? WHERE id=?";
+            $query = "UPDATE news SET title_news=?, img_news=?, content_news=?, user_id=? WHERE id=?";
             $result = $db->pdo_execute($query, $tmptitle_news, $tmpimg_news, $tmpcontent_news, $NewsId);
         }
 
@@ -82,12 +83,5 @@ class news
         $result = $db->pdo_query_one($select, $newsId);
 
         return $result;
-    }
-    function getNews_user()
-    {
-        $db = new connect();
-        $select = "SELECT news.*, id_user AS id_user FROM news
-                   LEFT JOIN users ON news.user_id = id_user";
-        return $db->pdo_query($select);
     }
 }
