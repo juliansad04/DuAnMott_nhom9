@@ -50,64 +50,64 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["register"])) {
     $confirmPassword = trim($_POST["ConfirmPassword"]);
 
     // Check for empty fields
-    if (empty($username) || empty($email) || empty($password) || empty($confirmPassword)) {
-        echo "<script>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Lỗi',
-                    text: 'Vui lòng điền đầy đủ thông tin',
-                    showConfirmButton: true,
-                }).then(() => {
-                    window.location.href = './'; 
-                });
-              </script>";
-        exit();
-    }
+    // if (empty($username) || empty($email) || empty($password) || empty($confirmPassword)) {
+    //     echo "<script>
+    //             Swal.fire({
+    //                 icon: 'error',
+    //                 title: 'Lỗi',
+    //                 text: 'Vui lòng điền đầy đủ thông tin',
+    //                 showConfirmButton: true,
+    //             }).then(() => {
+    //                 window.location.href = './';
+    //             });
+    //           </script>";
+    //     exit();
+    // }
 
-    // Validate username
-    if (!isValidUsername($username)) {
-        echo "<script>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Lỗi',
-                    text: 'Tên đăng nhập không hợp lệ, phải lớn hơn 4 và nhỏ hơn 20 kí tự',
-                    showConfirmButton: true,
-                }).then(() => {
-                    window.location.href = './'; 
-                });
-              </script>";
-        exit();
-    }
+    // // Validate username
+    // if (!isValidUsername($username)) {
+    //     echo "<script>
+    //             Swal.fire({
+    //                 icon: 'error',
+    //                 title: 'Lỗi',
+    //                 text: 'Tên đăng nhập không hợp lệ, phải lớn hơn 4 và nhỏ hơn 20 kí tự',
+    //                 showConfirmButton: true,
+    //             }).then(() => {
+    //                 window.location.href = './';
+    //             });
+    //           </script>";
+    //     exit();
+    // }
 
-    // Validate email format
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo "<script>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Lỗi',
-                    text: 'Email không đúng định dạng',
-                    showConfirmButton: true,
-                }).then(() => {
-                    window.location.href = './'; 
-                });
-              </script>";
-        exit();
-    }
+    // // Validate email format
+    // if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    //     echo "<script>
+    //             Swal.fire({
+    //                 icon: 'error',
+    //                 title: 'Lỗi',
+    //                 text: 'Email không đúng định dạng',
+    //                 showConfirmButton: true,
+    //             }).then(() => {
+//                 window.location.href = './';
+    //             });
+    //           </script>";
+    //     exit();
+    // }
 
-    // Check if passwords match
-    if ($password !== $confirmPassword) {
-        echo "<script>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Lỗi',
-                    text: 'Mật khẩu và xác nhận mật khẩu không khớp',
-                    showConfirmButton: true,
-                }).then(() => {
-                    window.location.href = './';
-                });
-              </script>";
-        exit();
-    }
+    // // Check if passwords match
+    // if ($password !== $confirmPassword) {
+    //     echo "<script>
+    //             Swal.fire({
+    //                 icon: 'error',
+    //                 title: 'Lỗi',
+    //                 text: 'Mật khẩu và xác nhận mật khẩu không khớp',
+    //                 showConfirmButton: true,
+    //             }).then(() => {
+    //                 window.location.href = './';
+    //             });
+    //           </script>";
+    //     exit();
+    // }
 
     // Continue with registration logic
     // ...
@@ -247,7 +247,6 @@ function isValidUsername($username) {
                             <li class=''>
 
                                 <a href='sanpham.php'>Sản phẩm</a>
-
                                 <ul>
 
                                     <!-- <li><a href='sanpham.php'>Apple</a>
@@ -334,24 +333,26 @@ function isValidUsername($username) {
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post">
+                <form method="post" onsubmit="return validateForm();">
                     <div class="form-group">
                         <label class="col-form-label">Tên đăng nhập</label>
-                        <input type="text" class="form-control registerName" placeholder=" " name="Name" >
+                        <input type="text" class="form-control registerName" placeholder=" " name="Name">
+                        <span style="color: red;" class="error-message" id="name-error"></span>
                     </div>
                     <div class="form-group">
                         <label class="col-form-label">Email</label>
-                        <input type="email" class="form-control registerEmail" placeholder=" " name="Email" >
+                        <input type="email" class="form-control registerEmail" placeholder=" " name="Email">
+                        <span style="color: red;" class="error-message" id="email-error"></span>
                     </div>
                     <div class="form-group">
                         <label class="col-form-label">Mật khẩu</label>
-                        <input type="password" class="form-control registerPass" placeholder=" " name="Password"
-                               id="password1" >
+                        <input type="password" class="form-control registerPass" placeholder=" " name="Password" id="password1">
+                        <span style="color: red;" class="error-message" id="password-error"></span>
                     </div>
                     <div class="form-group">
                         <label class="col-form-label">Nhập lại mật khẩu</label>
-                        <input type="password" class="form-control registerConfirmPass" placeholder=" "
-                               name="ConfirmPassword" id="password2" >
+                        <input type="password" class="form-control registerConfirmPass" placeholder=" " name="ConfirmPassword" id="password2">
+                        <span style="color: red;" class="error-message" id="confirm-password-error"></span>
                     </div>
                     <div class="right-w3l">
                         <input type="submit" class="form-control" value="Register" name="register">
@@ -361,3 +362,47 @@ function isValidUsername($username) {
         </div>
     </div>
 </div>
+<script>
+    function validateForm() {
+        // Reset previous error messages
+        document.getElementById('name-error').innerText = '';
+        document.getElementById('email-error').innerText = '';
+        document.getElementById('password-error').innerText = '';
+        document.getElementById('confirm-password-error').innerText = '';
+
+        var username = document.querySelector('.registerName').value;
+        var email = document.querySelector('.registerEmail').value;
+        var password = document.querySelector('.registerPass').value;
+        var confirmPassword = document.querySelector('.registerConfirmPass').value;
+
+        var isValid = true;
+
+        if (username.trim() === '') {
+            document.getElementById('name-error').innerText = 'Vui lòng nhập tên đăng nhập.';
+            isValid = false;
+        }
+
+        // Add similar checks for email, password, and confirmPassword
+        if (email.trim() === '') {
+            document.getElementById('email-error').innerText = 'Vui lòng nhập địa chỉ email.';
+            isValid = false;
+        }
+
+        if (password.trim() === '') {
+            document.getElementById('password-error').innerText = 'Vui lòng nhập mật khẩu.';
+            isValid = false;
+        }
+
+        if (confirmPassword.trim() === '') {
+            document.getElementById('confirm-password-error').innerText = 'Vui lòng xác nhận mật khẩu.';
+            isValid = false;
+        }
+
+        if (password !== confirmPassword) {
+            document.getElementById('confirm-password-error').innerText = 'Mật khẩu và xác nhận mật khẩu không khớp.';
+            isValid = false;
+        }
+
+        return isValid;
+    }
+</script>

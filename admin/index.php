@@ -184,7 +184,7 @@ ob_start(); ?>
                     move_uploaded_file($_FILES['img_news']['tmp_name'], $upload_dir . $tmpimg_news);
 
                     $news = new news();
-                    $news->updateNews($newsId, $tmptitle_news, $tmpimg_news, $tmpcontent_news);
+                    $news->updateNews($newsId, $tmptitle_news, $tmpimg_news, $tmpcontent_news, $_SESSION["user_id"]);
                     header("Location: index.php?act=listnews");
                 } else {
                     include './news/update.php';

@@ -52,15 +52,15 @@ class news
 
 
 
-    function updateNews($NewsId, $tmptitle_news, $tmpimg_news, $tmpcontent_news)
+    function updateNews($NewsId, $tmptitle_news, $tmpimg_news, $tmpcontent_news, $tmpuser_id)
     {
         $db = new connect();
         if (empty($tmpimg_news)) {
-            $query = "UPDATE news SET title_news=?, content_news=? WHERE id=?";
-            $result = $db->pdo_execute($query, $tmptitle_news, $tmpcontent_news, $NewsId);
+            $query = "UPDATE news SET title_news=?, content_news=?, user_id=? WHERE id=?";
+            $result = $db->pdo_execute($query, $tmptitle_news, $tmpcontent_news, $tmpuser_id, $NewsId);
         } else {
             $query = "UPDATE news SET title_news=?, img_news=?, content_news=?, user_id=? WHERE id=?";
-            $result = $db->pdo_execute($query, $tmptitle_news, $tmpimg_news, $tmpcontent_news, $NewsId);
+            $result = $db->pdo_execute($query, $tmptitle_news, $tmpimg_news, $tmpcontent_news, $tmpuser_id, $NewsId);
         }
 
         return $result;
