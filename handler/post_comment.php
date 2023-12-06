@@ -12,6 +12,6 @@ if (isset($_POST['post_comment'])) {
     $comment->insertComment($product_id, $user_id, $comment_text, $comment_date);
 }
 
-header("Location: ../chitietsp.php?id=$product_id"); 
+header("Location: ../chitietsp.php?id=$product_id");
 exit();
 ?>

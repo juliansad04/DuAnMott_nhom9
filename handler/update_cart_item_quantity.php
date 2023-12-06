@@ -13,5 +13,5 @@ $newQuantity = $_POST['newQuantity'];
 $shoppingCart->updateCartItemQuantity($cartItemId, $newQuantity);
 
 header("Location: {$_SERVER['HTTP_REFERER']}");
-exit(); 
+exit();
 ?>

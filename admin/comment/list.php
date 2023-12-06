@@ -1,5 +1,5 @@
-<div class="container-fluid" style="margin-left: 25px;">
-    <div class="card mt-12" style="width: 1450px;">
+<div>
+    <div class="card mt-12">
         <div class="card-header d-flex align-items-center justify-content-between">
             <h4>Danh sách Bình luận</h4>
         </div>

@@ -31,6 +31,7 @@ ob_start(); ?>
         include './online_order/online_order.php';
         include './online_order_details/online_order_details.php';
         include './carts/carts.php';
+        include './thongke/thongke.php';
         $action = 'home';
         if (isset($_GET['act'])) {
             $action = $_GET['act'];
@@ -89,9 +90,9 @@ ob_start(); ?>
             case 'deletecate':
                 if (isset($_GET['id'])) {
                     $cate = new Category();
-                    $cate->deleteCategory($_GET['id']);
+                    $mess = $cate->deleteCategory($_GET['id']);
                 }
-                header("Location: index.php?act=listcate");
+                header("Location: index.php?act=listcate&mess=" . $mess);
                 break;
             case 'listuser':
                 $user = new user();
@@ -141,29 +142,33 @@ ob_start(); ?>
                 break;
             case 'deleteuser':
                 if (isset($_GET['id'])) {
-                    $user = new user();
-                    $user->deleteUser($_GET['id']);
+                    try {
+                        $user = new user();
+                        $mess = $user->deleteUser($_GET['id']);
+                        header("Location: index.php?act=listuser&mess=" . $mess);
+                    } catch (Exception $e) {
+                        header("Location: index.php?act=listuser&mess=Không được phép xóa tài khoản do dữ liệu vẫn còn trong hệ thống");
+                    };
                 }
-                header("Location: index.php?act=listuser");
                 break;
             // news
             case 'listnews':
                 $news = new news();
+                $user = new user();
                 $listnews = $news->getNews();
                 include './news/list.php';
                 break;
             case 'addnews':
                 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['addNews'])) {
-                    $tmptitle_news = htmlspecialchars($_POST['title_news']);
-                    $tmpimg_news = htmlspecialchars($_FILES['img_news']['name']);
+                    $tmptitle_news = $_POST['title_news'];
+                    $tmpimg_news = $_FILES['img_news']['name'];
+
                     $upload_dir = './uploads/';
                     move_uploaded_file($_FILES['img_news']['tmp_name'], $upload_dir . $tmpimg_news);
-                    $tmpcontent_news = htmlspecialchars($_POST['content_news']);
-                    $id_user = 1;
+                    $tmpcontent_news = $_POST['content_news'];
                     $news = new news();
-                    $news->insertNews($tmptitle_news, $tmpimg_news, $tmpcontent_news, $id_user);
+                    $news->insertNews($tmptitle_news, $tmpimg_news, $tmpcontent_news, $_SESSION["user_id"]);
                     header("Location: index.php?act=listnews");
-                    exit();
                 } else {
                     include './news/add.php';
                 }
@@ -236,10 +241,14 @@ ob_start(); ?>
                 break;
             case 'deleteproduct':
                 if (isset($_GET['id'])) {
-                    $product = new Product();
-                    $product->deleteProduct($_GET['id']);
+                    try {
+                        $product = new Product();
+                        $product->deleteProduct($_GET['id']);
+                        header("Location: index.php?act=listproducts");
+                    } catch (Exception $e) {
+                        header("Location: index.php?act=listproducts&mess=Không được phép xóa sản phẩm do dữ liệu vẫn còn trong hệ thống");
+                    };
                 }
-                header("Location: index.php?act=listproducts");
                 break;
             case 'listcomment':
                 if (isset($_GET['id'])) {
@@ -388,6 +397,14 @@ ob_start(); ?>
                     $listOrderDetail = $orderDetail->getOnlineOrderDetailById($_GET['id']);
                     include './online_order_details/list.php';
                 }
+                break;
+            case 'thongke':
+                $thongke = new Thongke();
+                $order = new Order();
+                $orderOnline = new OnlineOrder();
+                $product = new Product();
+                $user = new User();
+                include './thongke/list.php';
                 break;
             default:
                 include './include/home.php';

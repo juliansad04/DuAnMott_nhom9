@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['place_order'])) {
     $customerAddress = $_POST['txtDiaChi'];
     $customerEmail = $_POST['txtEmail'];
     $customerNote = $_POST['txtNoiDung'];
-    
+
     $userId = $_SESSION['id'];
     $orderDate = date("Y-m-d H:i:s");
 

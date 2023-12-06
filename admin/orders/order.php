@@ -35,5 +35,42 @@ class Order
         $query = "DELETE FROM orders WHERE id=?";
         return $db->pdo_execute($query, $orderId);
     }
+
+    public function getOrderCountByDateRange($startDate = null, $endDate = null)
+    {
+        $db = new Connect();
+
+        $select = "SELECT COUNT(*) AS order_count FROM orders";
+
+
+        if ($startDate !== null && $endDate !== null) {
+            $select .= " WHERE order_date BETWEEN ? AND ?";
+            $result = $db->pdo_query_one($select, $startDate, $endDate);
+        } else {
+            $result = $db->pdo_query_one($select);
+        }
+
+        return $result ? $result['order_count'] : 0;
+    }
+
+
+    public function getOrderProfitByDateRange($startDate = null, $endDate = null)
+    {
+        $db = new Connect();
+
+        $select = "SELECT SUM(total_price) AS total_profit
+               FROM order_details";
+
+        if ($startDate !== null && $endDate !== null) {
+            $select .= " INNER JOIN orders o ON order_details.order_id = o.id
+                    WHERE o.order_date BETWEEN ? AND ?";
+            $result = $db->pdo_query_one($select, $startDate, $endDate);
+        } else {
+            $result = $db->pdo_query_one($select);
+        }
+
+        return $result ? $result['total_profit'] : 0;
+    }
+
 }
 ?>

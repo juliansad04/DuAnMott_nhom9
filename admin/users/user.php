@@ -49,7 +49,6 @@ class user
         echo "Inserted user with ID: " . $newUserId;
     }
 
-
     function registerUser($tmpusername, $tmppassword, $tmpname, $tmpemail, $tmpavatar, $tmpaddress, $tmpphone)
     {
         $db = new connect();
@@ -97,12 +96,13 @@ class user
     {
         $db = new connect();
         if ($this->hasOnlineOrders($id)) {
-            echo "Không thể xóa người dùng vì có đơn hàng liên quan.";
+            $mess = "Không thể xóa người dùng vì còn dữ liệu trong hệ thống.";
         } else {
             $query = "DELETE FROM users WHERE id=?";
             $db->pdo_execute($query, $id);
-            echo "Đã xóa người dùng thành công.";
+            $mess = "Đã xóa người dùng thành công.";
         }
+        return $mess;
     }
 
 
@@ -114,4 +114,14 @@ class user
 
         return $result;
     }
+
+    public function getUserCountByRole($role)
+    {
+        $db = new Connect();
+        $select = "SELECT COUNT(*) as user_count FROM users WHERE role = ?";
+        $result = $db->pdo_query_one($select, $role);
+
+        return $result ? $result['user_count'] : 0;
+    }
+
 }

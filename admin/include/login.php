@@ -26,14 +26,14 @@
                 <form role="form" method="POST">
                     <div class="form-group mb-3">
                         <label class="label" for="username">Tên đăng nhập</label>
-                        <input type="text" class="form-control" name="username" placeholder="Tên đăng nhập" required>
+                        <input type="text" class="form-control" name="username" placeholder="Tên đăng nhập">
                     </div>
                     <div class="form-group mb-3">
                         <label class="label" for="password">Mật khẩu</label>
-                        <input type="password" class="form-control" name="password" placeholder="Mật khẩu" required>
+                        <input type="password" class="form-control" name="password" placeholder="Mật khẩu">
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="form-control btn btn-primary rounded submit px-3">Đăng
+                        <button type="submit" name="login" class="form-control btn btn-primary rounded submit px-3">Đăng
                             nhập</button>
                     </div>
                     <div class="form-group d-md-flex">
@@ -45,24 +45,36 @@
                             </label>
                         </div>
                     </div>
+                    <?php
+
+                    $username = $_POST['username'] ?? "";
+                    $password = $_POST['password'] ?? "";
+                    $user = new User();
+
+                    if (isset($_POST['login'])) {
+                        if (empty($username) || empty($password)) {
+                            $_SESSION['message'] = 'Hãy điền đầy đủ thông tin đăng nhập';
+                            echo '<p class="text-danger">' . $_SESSION['message'] . '</p>';
+                            unset($_SESSION['message']);
+                        } else {
+                            $userInfo = $user->checkUser($username, $password);
+
+                            if ($userInfo) {
+                                $_SESSION['admin'] = $username;
+                                $_SESSION['user_id'] = $userInfo['id'];
+                                header("Location: index.php?act=home");
+                            } else {
+                                $_SESSION['message'] = 'Tên đăng nhập hoặc mật khẩu không chính xác';
+                                echo '<p class="text-danger">' . $_SESSION['message'] . '</p>';
+                                unset($_SESSION['message']);
+                            }
+                        }
+                    }
+
+                    ?>
+
                 </form>
             </div>
         </div>
     </div>
 </div>
-<?php
-
-$username = $_POST['username'] ?? "";
-$password = $_POST['password'] ?? "";
-$user = new User();
-
-if ($username == "" || $password == "") {
-    $_SESSION['message'] = 'Bạn phải nhập đủ thông tin';
-} elseif ($userInfo = $user->checkUser($username, $password)) {
-    $_SESSION['admin'] = $username;
-    $_SESSION['user_id'] = $userInfo['id'];
-    header("Location: index.php?act=home");
-} else {
-    $_SESSION['message'] = 'Tên đăng nhập hoặc mật khẩu không đúng';
-}
-?>

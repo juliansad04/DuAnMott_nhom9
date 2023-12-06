@@ -11,7 +11,7 @@
 
 <body>
 
-<div class="container mt-5" style="margin-left: 100px;">
+<div class="container mt-5">
     <h2 class="mb-4">Thêm tin</h2>
 
     <form method="post" enctype="multipart/form-data" onsubmit="return validateNew()">
@@ -32,6 +32,8 @@
         <a href="index.php?act=listnews" type="button" class="btn btn-danger">Hủy</a>
         <button class="btn btn-primary" name="addNews">Thêm</button>
     </form>
+    <script src="/validate/validatenews.js"></script>
+
 </div>
 
 <!-- Thêm link JavaScript của Bootstrap (nếu cần) -->

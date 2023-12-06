@@ -31,7 +31,7 @@ if (isset($_GET['id'])) {
 
         <body>
 
-        <div class="container mt-5" style="margin-left: 100px;">
+        <div class="container mt-5">
             <h2 class="mb-4">Sửa account</h2>
 
             <form method="post" enctype="multipart/form-data" onsubmit="return validateUpdateUser()">

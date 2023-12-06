@@ -1,8 +1,9 @@
-<div class="container-fluid" style="margin-left: 25px;">
-    <div class="card mt-12" style="width: 1450px;">
+<div>
+    <div class="card mt-12">
         <div class="card-header d-flex align-items-center justify-content-between">
             <h4>News</h4>
-            <a href="index.php?act=addnews" class="btn btn-success"><img src="../admin/content/images/add-plus-svgrepo-com.svg" alt="">THÊM</a>
+            <a href="index.php?act=addnews" class="btn btn-success"><img
+                        src="../admin/content/images/add-plus-svgrepo-com.svg" alt="">THÊM</a>
         </div>
         <div class="card-body">
             <table class="table table-bordered table-striped">
@@ -12,7 +13,7 @@
                     <th scope="col">Tiêu đề</th>
                     <th scope="col">Hình ảnh</th>
                     <th scope="col">Nội dung</th>
-                    <th scope="col">Người dùng</th>
+                    <th scope="col">Người đăng</th>
                     <th scope="col" width='15%'>Chức năng</th>
                 </tr>
                 </thead>
@@ -29,9 +30,11 @@
                     } else {
                         echo "<td>Không có hình</td>";
                     }
+                    $user = new User();
+                    $userDetails = $user->getUserById($news['user_id']);
 
                     echo "<td>" . $news['content_news'] . "</td>";
-                    echo "<td>" . $news['username'] . "</td>";
+                    echo "<td>" . $userDetails['username'] . "</td>";
                     echo "<td class='d-flex justify-content-evenly'>";
                     echo "<a href='./index.php?act=updatenews&id=". $news['id'] ."' class='btn btn-info text-white'>Sửa</a>";
                     echo "<button type='button' onclick='confirmDelete(" . $news['id'] . ")' class='btn btn-danger text-white'>Xoá</button>";

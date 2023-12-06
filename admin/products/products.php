@@ -75,5 +75,15 @@ class Product
         $query = "DELETE FROM products WHERE id=?";
         $db->pdo_execute($query, $id);
     }
+
+    public function getProductCount()
+    {
+        $db = new Connect();
+        $select = "SELECT COUNT(*) as product_count FROM products";
+        $result = $db->pdo_query_one($select);
+
+        return $result ? $result['product_count'] : 0;
+    }
+
 }
 ?>

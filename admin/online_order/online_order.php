@@ -62,6 +62,40 @@ class OnlineOrder
                    WHERE o.user_id=?";
         return $db->pdo_query($select, $userId);
     }
+    public function getOnlineOrderCountByDateRange($startDate = null, $endDate = null)
+    {
+        $db = new Connect();
+
+        $select = "SELECT COUNT(*) AS order_count FROM online_orders";
+
+        if ($startDate !== null && $endDate !== null) {
+            $select .= " WHERE order_date BETWEEN ? AND ?";
+            $result = $db->pdo_query_one($select, $startDate, $endDate);
+        } else {
+            $result = $db->pdo_query_one($select);
+        }
+
+        return $result ? $result['order_count'] : 0;
+    }
+
+    public function getOnlineOrderProfitByDateRange($startDate = null, $endDate = null)
+    {
+        $db = new Connect();
+
+        $select = "SELECT SUM(total_price) AS total_profit
+               FROM online_orders o
+               INNER JOIN online_order_details od ON o.id = od.online_order_id";
+
+        if ($startDate !== null && $endDate !== null) {
+            $select .= " WHERE o.order_date BETWEEN ? AND ?";
+            $result = $db->pdo_query_one($select, $startDate, $endDate);
+        } else {
+            $result = $db->pdo_query_one($select);
+        }
+
+        return $result ? $result['total_profit'] : 0;
+    }
+
 }
 
 ?>

@@ -3,7 +3,7 @@ class Connect
 {
     function pdo_get_connection()
     {
-        $dburl = "mysql:host=localhost;dbname=migoii;charset=utf8";
+        $dburl = "mysql:host=localhost;dbname=migoi;charset=utf8";
         $username = 'root';
         $password = '';
 

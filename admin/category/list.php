@@ -1,11 +1,19 @@
-
-<div class="container-fluid" style="margin-left: 25px;">
-    <div class="card mt-12" style="width: 1450px;">
+<?php
+if (isset($_GET['mess'])) {
+    echo "<div class='alert alert-warning alert-dismissible fade show' role='alert'> " . $_GET['mess'] . "
+       <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+         <span aria-hidden='true'>&times;</span>
+       </button>
+     </div>";
+}
+?>
+<div>
+    <div class="card mt-12">
         <div class="card-header d-flex align-items-center justify-content-between">
-            <h4 >Danh mục</h4>
+            <h4>Danh mục</h4>
             <a href="index.php?act=addcate" class="btn btn-success">THÊM</a>
         </div>
-        <div class="card-body"  >
+        <div class="card-body">
             <table class="table table-bordered table-hover">
                 <thead>
                 <tr>
@@ -46,11 +54,9 @@
             if (result.value) {
                 window.location.href = './index.php?act=deletecate&id=' + id;
 
-            }else{
+            } else {
 
             }
         });
     }
 </script>
-
-
