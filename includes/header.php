@@ -12,39 +12,120 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
     $username = $_POST["Name"];
     $password = $_POST["Password"];
 
-    $user = new user();
+    $user = new User(); // Assuming 'User' is the class for managing users
     $result = $user->checkUser($username, $password);
 
     if ($result) {
-        if ($result) {
-            $_SESSION["id"] =  $result['id'];
-            $_SESSION["username"] =  $result['username'];
-        }
-        header("Location: ./");
+        $_SESSION["id"] = $result['id'];
+        $_SESSION["username"] = $result['username'];
+
+        echo "<script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Đăng nhập thành công',
+                    showConfirmButton: true,
+                }).then(() => {
+                    window.location.href = './'; 
+                });
+              </script>";
     } else {
-        echo "Tên đăng nhập hoặc mật khẩu không đúng.";
+        echo "<script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi',
+                    text: 'Tên đăng nhập hoặc mật khẩu không đúng',
+                    showConfirmButton: true,
+                });
+              </script>";
     }
 }
 ?>
 
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["register"])) {
-    $username = $_POST["Name"];
-    $email = $_POST["Email"];
-    $password = $_POST["Password"];
+    // Retrieve form data
+    $username = trim($_POST["Name"]);
+    $email = trim($_POST["Email"]);
+    $password = trim($_POST["Password"]);
+    $confirmPassword = trim($_POST["ConfirmPassword"]);
+
+    // Check for empty fields
+    if (empty($username) || empty($email) || empty($password) || empty($confirmPassword)) {
+        echo "<script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi',
+                    text: 'Vui lòng điền đầy đủ thông tin',
+                    showConfirmButton: true,
+                }).then(() => {
+                    window.location.href = './'; 
+                });
+              </script>";
+        exit();
+    }
+
+    // Validate username
+    if (!isValidUsername($username)) {
+        echo "<script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi',
+                    text: 'Tên đăng nhập không hợp lệ, phải lớn hơn 4 và nhỏ hơn 20 kí tự',
+                    showConfirmButton: true,
+                }).then(() => {
+                    window.location.href = './'; 
+                });
+              </script>";
+        exit();
+    }
+
+    // Validate email format
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo "<script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi',
+                    text: 'Email không đúng định dạng',
+                    showConfirmButton: true,
+                }).then(() => {
+                    window.location.href = './'; 
+                });
+              </script>";
+        exit();
+    }
+
+    // Check if passwords match
+    if ($password !== $confirmPassword) {
+        echo "<script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi',
+                    text: 'Mật khẩu và xác nhận mật khẩu không khớp',
+                    showConfirmButton: true,
+                }).then(() => {
+                    window.location.href = './';
+                });
+              </script>";
+        exit();
+    }
+
+    // Continue with registration logic
+    // ...
+
+    // If everything is valid, proceed with registration
+    // ...
 
 
     $user = new user();
     $userId = $user->registerUser($username, $password, $username, $email, null, null, null);
     if ($userId) {
-
         $cart = new Cart();
-        $createdAt = date("Y-m-d H:i:s"); 
+        $createdAt = date("Y-m-d H:i:s");
         $cartId = $cart->createCart($userId, $createdAt);
 
         if ($cartId) {
+            $_SESSION['registerSuccess'] = "Đăng kí tài khoản thành công";
             header("Location: ./");
-            echo "Tạo tài khoản và giỏ hàng thành công";
             exit();
         } else {
             $user->deleteUser($userId);
@@ -55,7 +136,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["register"])) {
     }
     exit();
 }
+
+function isValidUsername($username) {
+    $length = strlen($username);
+    if ($length < 4 || $length > 20) {
+        return false;
+    }
+    if (!ctype_alnum($username)) {
+        return false;
+    }
+    return true;
+}
 ?>
+
+<?php if (!empty($_SESSION['registerSuccess'])) : ?>
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Thành công',
+            text: '<?php echo $_SESSION['registerSuccess']; ?>',
+            showConfirmButton: true,
+        }).then(() => {
+            window.location.href = './';
+            <?php unset($_SESSION['registerSuccess']); ?>
+        });
+    </script>
+<?php endif; ?>
+
 <div class="header_top_menu">
     <div class="header_top_menu_all">
         <div class="header_top">
@@ -117,12 +224,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["register"])) {
                                         $categories = $category->getCategory();
 
                                         foreach ($categories as $cat) {
-                                        ?>
-                                        <li class='active has-sub'>
-                                            <a
-                                                href='sanpham.php?cate=<?php echo $cat['id']; ?>'><span><?php echo $cat['name']; ?></span></a>
-                                        </li>
-                                        <?php
+                                            ?>
+                                            <li class='active has-sub'>
+                                                <a
+                                                        href='sanpham.php?cate=<?php echo $cat['id']; ?>'><span><?php echo $cat['name']; ?></span></a>
+                                            </li>
+                                            <?php
                                         }
                                         ?>
                                     </ul>
@@ -227,37 +334,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["register"])) {
                 </button>
             </div>
             <div class="modal-body">
-                <form action="#" method="post">
+                <form method="post">
                     <div class="form-group">
                         <label class="col-form-label">Tên đăng nhập</label>
-                        <input type="text" class="form-control" placeholder=" " name="Name" required="">
+                        <input type="text" class="form-control registerName" placeholder=" " name="Name" >
                     </div>
                     <div class="form-group">
                         <label class="col-form-label">Email</label>
-                        <input type="email" class="form-control" placeholder=" " name="Email" required="">
+                        <input type="email" class="form-control registerEmail" placeholder=" " name="Email" >
                     </div>
                     <div class="form-group">
                         <label class="col-form-label">Mật khẩu</label>
-                        <input type="password" class="form-control" placeholder=" " name="Password" id="password1"
-                            required="">
+                        <input type="password" class="form-control registerPass" placeholder=" " name="Password"
+                               id="password1" >
                     </div>
                     <div class="form-group">
                         <label class="col-form-label">Nhập lại mật khẩu</label>
-                        <input type="password" class="form-control" placeholder=" " name="Confirm Password"
-                            id="password2" required="">
+                        <input type="password" class="form-control registerConfirmPass" placeholder=" "
+                               name="ConfirmPassword" id="password2" >
                     </div>
                     <div class="right-w3l">
                         <input type="submit" class="form-control" value="Register" name="register">
                     </div>
-                    <!-- <div class="sub-w3l">
-							<div class="custom-control custom-checkbox mr-sm-2">
-								<input type="checkbox" class="custom-control-input" id="customControlAutosizing2">
-								<label class="custom-control-label" for="customControlAutosizing2">Tôi đồng ý các điều khoản</label>
-							</div>
-						</div> -->
                 </form>
             </div>
         </div>
     </div>
 </div>
-<!-- //modal -->

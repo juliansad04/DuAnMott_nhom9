@@ -14,8 +14,8 @@
 <<!-- link rel="stylesheet" href="template/Default/css/responsive.css" type="text/css" /> -->
 <link async rel="stylesheet" href="css/cssfooter.css" />
 <div style="height: 1840px;position: fixed;width: 100%;top: 0px;left: 0px;right: 0px;bottom: 0px;z-index: 1001;background: #000 none repeat scroll 0% 0%;opacity: 0.3;display: none;text-align:center"
-    id="khungnen"></div>
+     id="khungnen"></div>
 <div style="display: none;left: 70%;margin-left: -309px;z-index: 1002;position: fixed;top: 40%;margin-top: 0px;"
-    id="loadding">
+     id="loadding">
     <img src="image/loader.gif" />
 </div>

@@ -1,8 +1,8 @@
 <?php
 if (is_array($listOrderDetail)) {
     ?>
-    <div class="container-fluid" style="margin-left: 25px;">
-        <div class="card mt-12" style="width: 1450px;">
+    <div>
+        <div class="card mt-12">
             <div class="card-header d-flex align-items-center justify-content-between">
                 <h4>Chi tiết đơn hàng</h4>
             </div>

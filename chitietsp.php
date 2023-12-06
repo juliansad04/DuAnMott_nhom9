@@ -164,11 +164,11 @@
                                     <a onclick="<?php echo isset($_SESSION['id']) ? 'addToCart(' . $productId . ');' : 'alertWaring()'; ?>"
                                        class="view_duan">
                                         <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span
-                                            class="text-mobile-buy">Mua hàng</span>
+                                                class="text-mobile-buy">Mua hàng</span>
                                     </a>
                                     <a href="tel:090 66 99 038" class="view_duan">
                                         <i class="fa fa-phone" aria-hidden="true"></i> <span
-                                            class="text-mobile-buy">Gọi ngay</span>
+                                                class="text-mobile-buy">Gọi ngay</span>
                                     </a>
                                     <div class="clear"></div>
                                 </div>
@@ -211,13 +211,13 @@
                                 <p>Chat với chúng tôi :</p>
                                 <p><img alt="icon skype " src="image/icon skype.png"
                                         style="height:24px; width:24px" />&nbsp;<a
-                                        href="skype:quangtran.123corp?chat">mifgois.com</a></p>
+                                            href="skype:quangtran.123corp?chat">mifgois.com</a></p>
                                 <p><img alt="icon skype " src="image/icon skype.png"
                                         style="height:24px; width:24px" />&nbsp;<a
-                                        href="skype:quangtran.123corp?chat">mifgois.com</a></p>
+                                            href="skype:quangtran.123corp?chat">mifgois.com</a></p>
                                 <p><img alt="icon skype " src="image/icon skype.png"
                                         style="height:24px; width:24px" />&nbsp;<a
-                                        href="skype:quangtran.123corp?chat">mifgois.com</a></p>
+                                            href="skype:quangtran.123corp?chat">mifgois.com</a></p>
 
                             </div>
                         </div>
@@ -235,7 +235,7 @@
                                         <span class="text-mobile">Chi tiết sản phẩm</span></a></li>
 
                                 <li><a href="#Comment"><i class="fa fa-comment-o" aria-hidden="true"></i><span
-                                            class="text-mobile"> Bình luận</span></a></li>
+                                                class="text-mobile"> Bình luận</span></a></li>
                             </ul>
                             <div class="name-product">
                                 Mì
@@ -247,11 +247,11 @@
                                     <a onclick="<?php echo isset($_SESSION['id']) ? 'addToCart(' . $productId . ');' : 'alertWaring()'; ?>"
                                        class="view_duan">
                                         <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span
-                                            class="text-mobile-buy">Mua hàng</span>
+                                                class="text-mobile-buy">Mua hàng</span>
                                     </a>
                                     <a href="tel:090 66 99 038" class="view_duan">
                                         <i class="fa fa-phone" aria-hidden="true"></i> <span
-                                            class="text-mobile-buy">Gọi ngay</span>
+                                                class="text-mobile-buy">Gọi ngay</span>
                                     </a>
                                     <div class="clear"></div>
                                 </div>
@@ -328,9 +328,9 @@
                                                             </div>
                                                             <div class="float-end mt-2 pt-1">
                                                                 <button type="submit" class="btn btn-primary btn-sm"
-                                                                        name="post_comment">Post comment</button>
+                                                                        name="post_comment">Gửi bình luận</button>
                                                                 <button type="button"
-                                                                        class="btn btn-outline-primary btn-sm">Cancel</button>
+                                                                        class="btn btn-outline-primary btn-sm">Hủy</button>
                                                             </div>
                                                         </form>
                                                         <br>
@@ -425,7 +425,7 @@
                                         <div class="price_old_new">
                                             <div class="price">
                                                 <span
-                                                    class="news_price"><?php echo number_format($productMyLy['price']); ?>
+                                                        class="news_price"><?php echo number_format($productMyLy['price']); ?>
                                                     vnd</span>
                                             </div>
                                         </div>

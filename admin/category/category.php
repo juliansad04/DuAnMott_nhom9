@@ -58,12 +58,13 @@ class Category
     {
         $db = new connect();
         if ($this->hasProducts($id)) {
-            echo "Không thể xóa danh mục vì có sản phẩm thuộc danh mục này.";
+            $mess = "Không thể xóa danh mục vì có sản phẩm thuộc danh mục này.";
         } else {
             $query = "DELETE FROM category WHERE id=?";
             $db->pdo_execute($query, $id);
-            echo "Đã xóa danh mục thành công.";
+            $mess = "Đã xóa danh mục thành công.";
         }
+        return $mess;
     }
 
     public function getCategoryById($categoryId)

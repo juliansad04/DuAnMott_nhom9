@@ -10,7 +10,7 @@
 </head>
 
 <body>
-<div class="container mt-5" style="margin-left: 100px;">
+<div class="container mt-5" >
     <h2 class="mb-4">Thêm danh mục</h2>
     <form method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
         <input type="hidden" id="username" name="username" value="">

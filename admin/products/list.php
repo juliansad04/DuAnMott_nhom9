@@ -1,5 +1,14 @@
-<div class="container-fluid" style="margin-left: 25px;">
-    <div class="card mt-12" style="width: 1450px;">
+<?php
+if (isset($_GET['mess'])) {
+    echo "<div class='alert alert-warning alert-dismissible fade show' role='alert'> " . $_GET['mess'] . "
+       <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+         <span aria-hidden='true'>&times;</span>
+       </button>
+     </div>";
+}
+?>
+<div>
+    <div class="card mt-12">
         <div class="card-header d-flex align-items-center justify-content-between">
             <h4>Danh sách sản phẩm</h4>
             <a href="index.php?act=addproduct" class="btn btn-success"><img

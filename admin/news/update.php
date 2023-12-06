@@ -48,6 +48,7 @@ if (isset($_GET['id'])) {
                 <a href="index.php?act=listnews" type="button" class="btn btn-danger">Hủy</a>
                 <button class="btn btn-primary" name="updateNews">Sửa</button>
             </form>
+            <script src="/validate/validatenews.js"></script>
         </div>
 
         <!-- Thêm link JavaScript của Bootstrap (nếu cần) -->

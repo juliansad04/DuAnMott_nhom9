@@ -13,7 +13,7 @@ if (isset($_GET['id'])) {
     $shoppingCart->removeFromCart($itemId);
 
     header("Location: {$_SERVER['HTTP_REFERER']}");
-    exit(); 
+    exit();
 
 } else {
 

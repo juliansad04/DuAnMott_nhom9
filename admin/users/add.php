@@ -11,7 +11,7 @@
 
 <body>
 
-<div class="container mt-5" style="margin-left: 100px;">
+<div class="container mt-12" >
     <h2 class="mb-4">Thêm account</h2>
 
     <form method="post" enctype="multipart/form-data" onsubmit="return validateAddUser()">
