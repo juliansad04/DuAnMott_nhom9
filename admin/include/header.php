@@ -171,8 +171,8 @@
         <a class="nav-link" href="./index.php?act=listuser">Tài khoản</a>
         <a class="nav-link" href="./index.php?act=listcate">Danh mục</a>
         <a class="nav-link" href="./index.php?act=listproducts">Sản phẩm</a>
-        <a class="nav-link" href="./index.php?act=listorder">Đơn hàng</a>
-        <a class="nav-link" href="./index.php?act=listorderonline">Đơn hàng online</a>
+<!--        <a class="nav-link" href="./index.php?act=listorder">Đơn hàng</a>-->
+        <a class="nav-link" href="./index.php?act=listorderonline">Đơn hàng</a>
         <a class="nav-link" href="./index.php?act=listnews">Tin tức</a>
         <a class="nav-link" href="./index.php?act=thongke">Thống Kê</a>
         <a class="nav-link" href="./index.php?act=logout">Đăng Xuất</a>
