@@ -17,61 +17,6 @@
 <div class="clear"></div>
 <div class="clear"></div>
 <!--start:body-->
-<script type="text/javascript">
-    function giohang(id) {
-        window.open('http://localhost/3tmobile/giohang.php');
-        // document.getElementById("khungnen").style.display = "block";
-
-        // document.getElementById("loadding").style.display = "block";
-
-        // jQuery.post('./gio-hang/', {
-        //     'qty': 1,
-        //     'maSanPham': id
-        // }, function(data) {
-
-        //     document.getElementById("khungnen").style.display = "none";
-
-        //     document.getElementById("loadding").style.display = "none";
-
-        //     swal({
-
-        //             title: "Thành công",
-
-        //             text: "Sản phẩm đã được thêm vào giỏ hàng!",
-
-        //             type: "success",
-
-        //             showCancelButton: true,
-
-        //             confirmButtonColor: '#F19F00',
-
-        //             confirmButtonText: 'Xem giỏ hàng',
-
-        //             cancelButtonText: "Tiếp tục mua",
-
-        //             closeOnConfirm: false,
-
-        //         },
-
-        //         function(isConfirm) {
-
-        //             if (isConfirm) {
-
-        //                 window.location = '';
-
-        //             } else {
-
-        //                 closeOnCancel: true;
-
-        //             }
-
-        //         });
-
-        // })
-
-    }
-</script>
-
 
 <section>
 
@@ -130,7 +75,10 @@
                 <div class="girds_all list_all_other_page ">
                     <?php
                     $product = new Product();
-                    if (isset($_GET['cate'])) {
+                    if (isset($_GET['search'])) {
+                        $searchTerm = $_GET['search'];
+                        $products = $product->searchProductByName($searchTerm);
+                    } elseif (isset($_GET['cate'])) {
                         $categoryId = $_GET['cate'];
                         $products = $product->getProductsByCategory($categoryId);
                     } else {
@@ -138,49 +86,53 @@
                     }
 
 
-                    foreach ($products as $productItem) {
-                        ?>
-                        <div class="grids">
-                            <div class="grids_in">
-                                <div class="content">
-                                    <div class="img-right-pro">
-                                        <a href="sanpham.php">
-                                            <img class="lazy img-pro content-image"
-                                                 src="./admin/uploads/<?php echo $productItem['image']; ?>"
-                                                 alt="<?php echo $productItem['name']; ?>">
-                                        </a>
-                                        <div class="content-overlay"></div>
-                                        <div class="content-details fadeIn-top">
-                                            <ul class="details-product-overlay">
-                                                <?php
-                                                $cate = new Category();
-                                                $objCate = $cate->getCategoryById($productItem['category_id']);
-                                                ?>
-                                                <li><?php echo $objCate['name']; ?></li>
-                                            </ul>
+                    if (empty($products)) {
+                        echo '<p>Không có sản phẩm nào được tìm thấy.</p>';
+                    } else {
+                        foreach ($products as $productItem) {
+                            ?>
+                            <div class="grids">
+                                <div class="grids_in">
+                                    <div class="content">
+                                        <div class="img-right-pro">
+                                            <a href="sanpham.php">
+                                                <img class="lazy img-pro content-image"
+                                                     src="./admin/uploads/<?php echo $productItem['image']; ?>"
+                                                     alt="<?php echo $productItem['name']; ?>">
+                                            </a>
+                                            <div class="content-overlay"></div>
+                                            <div class="content-details fadeIn-top">
+                                                <ul class="details-product-overlay">
+                                                    <?php
+                                                    $cate = new Category();
+                                                    $objCate = $cate->getCategoryById($productItem['category_id']);
+                                                    ?>
+                                                    <li><?php echo $objCate['name']; ?></li>
+                                                </ul>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="name-pro-right">
-                                        <a href="chitietsp.php?id=<?php echo $productItem['id']; ?>">
-                                            <h3><?php echo $productItem['name']; ?></h3>
-                                        </a>
-                                    </div>
-                                    <div class="add_card">
-                                        <button type="button"
-                                                onclick="<?php echo isset($_SESSION['id']) ? 'addToCart(' . $productItem['id'] . ');' : 'alertWaring()'; ?>">
-                                            <i class="fa fa-shopping-cart" aria-hidden="true"></i> Đặt hàng
-                                        </button>
-                                    </div>
-                                    <div class="price_old_new">
-                                        <div class="price">
+                                        <div class="name-pro-right">
+                                            <a href="chitietsp.php?id=<?php echo $productItem['id']; ?>">
+                                                <h3><?php echo $productItem['name']; ?></h3>
+                                            </a>
+                                        </div>
+                                        <div class="add_card">
+                                            <button type="button"
+                                                    onclick="<?php echo isset($_SESSION['id']) ? 'addToCart(' . $productItem['id'] . ');' : 'alertWaring()'; ?>">
+                                                <i class="fa fa-shopping-cart" aria-hidden="true"></i> Đặt hàng
+                                            </button>
+                                        </div>
+                                        <div class="price_old_new">
+                                            <div class="price">
                                             <span class="news_price"><?php echo number_format($productItem['price']); ?>
                                                 vnd</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <?php
+                            <?php
+                        }
                     }
                     ?>
 

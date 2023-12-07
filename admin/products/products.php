@@ -85,5 +85,12 @@ class Product
         return $result ? $result['product_count'] : 0;
     }
 
+    public function searchProductByName($partialName)
+    {
+        $db = new connect();
+        $select = "SELECT * FROM products WHERE name LIKE ?";
+        $partialName = '%' . $partialName . '%';
+        return $db->pdo_query($select, $partialName);
+    }
 }
 ?>
