@@ -22,6 +22,7 @@ if (is_array($listOrderDetail)) {
                     <?php
                     foreach ($listOrderDetail as $order) {
                         echo "<tr>";
+                        echo "<tr style='background-color: #fff;'>";
                         echo "<td>" . $order['id'] . "</td>";
 
                         $productId = $order['product_id'];
@@ -31,10 +32,11 @@ if (is_array($listOrderDetail)) {
                         echo "<td>" . $productName . "</td>";
 
                         echo "<td>" . $order['quantity'] . "</td>";
-                        echo "<td>" . number_format($productDetails['price'], 2) . "</td>";
+                        echo "<td>" . number_format($productDetails['price'], 0, ',', '.') . " VNĐ</td>";
+
 
                         $totalPrice = floatval($order['total_price']);
-                        echo "<td>" . number_format($totalPrice, 2) . "</td>";
+                        echo "<td>" . number_format($totalPrice, 0, ',', '.') . " VNĐ</td>";
                         echo "</tr>";
                     }
 

@@ -11,6 +11,7 @@ if (isset($_GET['id'])) {
         $description = $productDetails['description'];
         $price = $productDetails['price'];
         $category_id = $productDetails['category_id'];
+        $quantity = $productDetails['quantity'];
 
         ?>
 
@@ -29,7 +30,7 @@ if (isset($_GET['id'])) {
         <div class="container mt-5">
             <h2 class="mb-4">Cập nhật sản phẩm</h2>
 
-            <form method="post" enctype="multipart/form-data" onsubmit="return validateProduct()">
+            <form method="post" enctype="multipart/form-data" onsubmit="return validateudProduct()">
                 <input type="hidden" id="id" name="id" value="<?php echo $productId; ?>">
 
                 <div class="form-group">
@@ -40,8 +41,7 @@ if (isset($_GET['id'])) {
 
                 <div class="form-group">
                     <label for="description">Mô tả</label>
-                    <textarea class="form-control" id="description" name="description" rows="3"
-                    ><?php echo $description; ?></textarea>
+                    <textarea class="form-control" id="description" name="description" rows="3"><?php echo $description; ?></textarea>
                     <span id="descriptionError" style="color: red;"></span>
                 </div>
 
@@ -73,12 +73,17 @@ if (isset($_GET['id'])) {
                     <input type="file" class="form-control-file" id="image" name="image" accept="image/*">
                     <span id="imageError" style="color: red;"></span>
                 </div>
+                <div class="form-group">
+                    <label for="quantity">Số lượng</label>
+                    <input type="text" class="form-control" id="quantity" name="quantity" value="<?php echo $quantity; ?>">
+                    <span id="quantityError" style="color: red;"></span>
+                </div>
 
                 <a href="index.php?act=listproducts" type="button" class="btn btn-danger">Hủy</a>
                 <button class="btn btn-primary" name="updateProduct">Cập nhật</button>
 
             </form>
-            <script src="/validate/validateproduct.js"></script>
+            <script src="../validate/validateproduct.js"></script>
         </div>
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

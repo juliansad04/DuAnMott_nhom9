@@ -210,17 +210,19 @@ ob_start(); ?>
                     $tmpPrice = $_POST['price'];
                     $tmpImage = $_FILES['image']['name'];
                     $categoryId = $_POST['category'];
+                    $tmpQuantity = $_POST['quantity'];
 
                     $upload_dir = './uploads/';
                     move_uploaded_file($_FILES['image']['tmp_name'], $upload_dir . $tmpImage);
 
                     $product = new Product();
-                    $product->insertProduct($tmpName, $tmpDescription, $tmpPrice, $tmpImage, $categoryId);
+                    $product->insertProduct($tmpName, $tmpDescription, $tmpPrice, $tmpImage, $categoryId, $tmpQuantity);
                     header("Location: index.php?act=listproducts");
                 } else {
                     include './products/add.php';
                 }
                 break;
+
             case 'updateproduct':
                 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateProduct'])) {
                     $tmpId = $_POST['id'];
@@ -229,16 +231,19 @@ ob_start(); ?>
                     $tmpPrice = $_POST['price'];
                     $tmpImage = $_FILES['image']['name'];
                     $categoryId = $_POST['category'];
+                    $tmpQuantity = $_POST['quantity'];
+
                     $upload_dir = './uploads/';
                     move_uploaded_file($_FILES['image']['tmp_name'], $upload_dir . $tmpImage);
 
                     $product = new Product();
-                    $product->updateProduct($tmpId, $tmpName, $tmpDescription, $tmpPrice, $tmpImage, $categoryId);
+                    $product->updateProduct($tmpId, $tmpName, $tmpDescription, $tmpPrice, $tmpImage, $categoryId, $tmpQuantity);
                     header("Location: index.php?act=listproducts");
                 } else {
                     include './products/update.php';
                 }
                 break;
+
             case 'deleteproduct':
                 if (isset($_GET['id'])) {
                     try {

@@ -2,7 +2,16 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+if (isset($_SESSION["id"])) {
+    // Người dùng đã đăng nhập, gửi trạng thái đăng nhập vào JavaScript
+    echo '<script>var userLoggedIn = true;</script>';
+} else {
+    // Người dùng chưa đăng nhập, không gửi trạng thái đăng nhập vào JavaScript
+    echo '<script>var userLoggedIn = false;</script>';
+}
 ?>
+
+
 <?php
 include("./admin/include/pdo.php");
 include("./admin/users/user.php");
@@ -12,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
     $username = $_POST["Name"];
     $password = $_POST["Password"];
 
-    $user = new User(); // Assuming 'User' is the class for managing users
+    $user = new User();
     $result = $user->checkUser($username, $password);
 
     if ($result) {
@@ -35,6 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
                     title: 'Lỗi',
                     text: 'Tên đăng nhập hoặc mật khẩu không đúng',
                     showConfirmButton: true,
+                    footer: 'Nếu quên mật khẩu, bấm vào <a href=\"quenmatkhau.php\"><strong>đây</strong></a> để lấy lại mật khẩu'
                 });
               </script>";
     }
@@ -48,72 +58,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["register"])) {
     $email = trim($_POST["Email"]);
     $password = trim($_POST["Password"]);
     $confirmPassword = trim($_POST["ConfirmPassword"]);
-
-    // Check for empty fields
-    // if (empty($username) || empty($email) || empty($password) || empty($confirmPassword)) {
-    //     echo "<script>
-    //             Swal.fire({
-    //                 icon: 'error',
-    //                 title: 'Lỗi',
-    //                 text: 'Vui lòng điền đầy đủ thông tin',
-    //                 showConfirmButton: true,
-    //             }).then(() => {
-    //                 window.location.href = './';
-    //             });
-    //           </script>";
-    //     exit();
-    // }
-
-    // // Validate username
-    // if (!isValidUsername($username)) {
-    //     echo "<script>
-    //             Swal.fire({
-    //                 icon: 'error',
-    //                 title: 'Lỗi',
-    //                 text: 'Tên đăng nhập không hợp lệ, phải lớn hơn 4 và nhỏ hơn 20 kí tự',
-    //                 showConfirmButton: true,
-    //             }).then(() => {
-    //                 window.location.href = './';
-    //             });
-    //           </script>";
-    //     exit();
-    // }
-
-    // // Validate email format
-    // if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    //     echo "<script>
-    //             Swal.fire({
-    //                 icon: 'error',
-    //                 title: 'Lỗi',
-    //                 text: 'Email không đúng định dạng',
-    //                 showConfirmButton: true,
-    //             }).then(() => {
-//                 window.location.href = './';
-    //             });
-    //           </script>";
-    //     exit();
-    // }
-
-    // // Check if passwords match
-    // if ($password !== $confirmPassword) {
-    //     echo "<script>
-    //             Swal.fire({
-    //                 icon: 'error',
-    //                 title: 'Lỗi',
-    //                 text: 'Mật khẩu và xác nhận mật khẩu không khớp',
-    //                 showConfirmButton: true,
-    //             }).then(() => {
-    //                 window.location.href = './';
-    //             });
-    //           </script>";
-    //     exit();
-    // }
-
-    // Continue with registration logic
-    // ...
-
-    // If everything is valid, proceed with registration
-    // ...
 
 
     $user = new user();
@@ -247,21 +191,9 @@ function isValidUsername($username) {
                             <li class=''>
 
                                 <a href='sanpham.php'>Sản phẩm</a>
+
                                 <ul>
 
-                                    <!-- <li><a href='sanpham.php'>Apple</a>
-                                                <ul>
-                                                    <li><a href='sanpham.php'>Iphone</a></li>
-                                                    <li><a href='sanpham.php'>Macbook</a></li>
-                                                </ul>
-                                            </li>
-
-                                            <li><a href='sanpham.php'>Samsung</a>
-                                                <ul>
-                                                    <li><a href='sanpham.php'>Samsung A</a></li>
-                                                    <li><a href='sanpham.php'>Samsung B</a></li>
-                                                </ul>
-                                            </li> -->
 
                                 </ul>
                             </li>
@@ -346,12 +278,14 @@ function isValidUsername($username) {
                     </div>
                     <div class="form-group">
                         <label class="col-form-label">Mật khẩu</label>
-                        <input type="password" class="form-control registerPass" placeholder=" " name="Password" id="password1">
+                        <input type="password" class="form-control registerPass" placeholder=" " name="Password"
+                               id="password1">
                         <span style="color: red;" class="error-message" id="password-error"></span>
                     </div>
                     <div class="form-group">
                         <label class="col-form-label">Nhập lại mật khẩu</label>
-                        <input type="password" class="form-control registerConfirmPass" placeholder=" " name="ConfirmPassword" id="password2">
+                        <input type="password" class="form-control registerConfirmPass" placeholder=" "
+                               name="ConfirmPassword" id="password2">
                         <span style="color: red;" class="error-message" id="confirm-password-error"></span>
                     </div>
                     <div class="right-w3l">
@@ -362,6 +296,39 @@ function isValidUsername($username) {
         </div>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    var inactivityTime = 0;
+    var logoutTime = 120; // thời gian đăng xuất sau 10 giây không hoạt động (có thể thay đổi)
+
+    function resetTimer() {
+        inactivityTime = 0;
+    }
+
+    function checkInactivity() {
+        inactivityTime++;
+        if (userLoggedIn && inactivityTime >= logoutTime) {
+            // Thực hiện đăng xuất chỉ khi người dùng đã đăng nhập
+            Swal.fire({
+                icon: 'info',
+                title: 'Tự động đăng xuất',
+                text: 'Bạn đã được đăng xuất do không hoạt động.',
+                showConfirmButton: false,
+                timer: 3000
+            }).then(() => {
+                window.location.href = './includes/logout.php';
+            });
+        }
+    }
+
+    document.addEventListener('mousemove', resetTimer);
+    document.addEventListener('keydown', resetTimer);
+    document.addEventListener('click', resetTimer);
+    document.addEventListener('scroll', resetTimer);
+
+    setInterval(checkInactivity, 1000); // Kiểm tra mỗi giây
+</script>
+
 <script>
     function validateForm() {
         // Reset previous error messages
@@ -380,9 +347,11 @@ function isValidUsername($username) {
         if (username.trim() === '') {
             document.getElementById('name-error').innerText = 'Vui lòng nhập tên đăng nhập.';
             isValid = false;
+        } else if (!isValidUsername(username)) {
+            document.getElementById('name-error').innerText = 'Tên đăng nhập phải chứa ít nhất 5 ký tự, bao gồm ít nhất 1 chữ cái và 1 số.';
+            isValid = false;
         }
 
-        // Add similar checks for email, password, and confirmPassword
         if (email.trim() === '') {
             document.getElementById('email-error').innerText = 'Vui lòng nhập địa chỉ email.';
             isValid = false;
@@ -390,6 +359,9 @@ function isValidUsername($username) {
 
         if (password.trim() === '') {
             document.getElementById('password-error').innerText = 'Vui lòng nhập mật khẩu.';
+            isValid = false;
+        } else if (!isValidPassword(password)) {
+            document.getElementById('password-error').innerText = 'Mật khẩu phải chứa ít nhất 5 ký tự, bao gồm ít nhất 1 chữ cái và 1 số.';
             isValid = false;
         }
 
@@ -405,4 +377,18 @@ function isValidUsername($username) {
 
         return isValid;
     }
+
+    function isValidUsername(username) {
+        // Username must be at least 5 characters and contain at least 1 letter and 1 number
+        var usernameRegex = /^(?=.*[A-Za-z])(?=.*\d).{5,}$/;
+        return usernameRegex.test(username);
+    }
+
+    function isValidPassword(password) {
+        // Password must contain at least one letter and one number
+        var passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{5,}$/;
+        return passwordRegex.test(password);
+    }
+
+
 </script>

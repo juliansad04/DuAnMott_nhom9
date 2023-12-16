@@ -24,7 +24,7 @@ if (isset($_GET['id'])) {
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Thêm mới người dùng</title>
+            <title>Cập nhật người dùng</title>
             <!-- Thêm link CSS của Bootstrap -->
             <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
         </head>
@@ -35,29 +35,32 @@ if (isset($_GET['id'])) {
             <h2 class="mb-4">Sửa account</h2>
 
             <form method="post" enctype="multipart/form-data" onsubmit="return validateUpdateUser()">
-                <input type="text" type="hidden" class="form-control" id="userId" name="userId" value="<?php echo $userId; ?>" >
+                <div class="form-group">
+                    <label for="userId">ID</label>
+                    <input type="text" class="form-control" id="userId" name="userId" value="<?php echo $userId; ?>" readonly>
+                </div>
 
                 <div class="form-group">
                     <label for="username">Tài khoản</label>
-                    <input type="text" class="form-control" id="username" name="username" value="<?php echo $username; ?>" >
+                    <input type="text" class="form-control" id="username" name="username" value="<?php echo $username; ?>" readonly>
                     <span id="usernameError" style="color: red;"></span>
                 </div>
 
                 <div class="form-group">
                     <label for="password">Mật khẩu</label>
-                    <input type="password" class="form-control" id="password" name="password" value="<?php echo $password; ?>" >
+                    <input type="password" class="form-control" id="password" name="password" value="<?php echo $password; ?>" readonly>
                     <span id="passwordError" style="color: red;"></span>
                 </div>
 
                 <div class="form-group">
                     <label for="fullname">Họ và tên</label>
-                    <input type="text" class="form-control" id="fullname" name="fullname" value="<?php echo $fullname; ?>" >
+                    <input type="text" class="form-control" id="fullname" name="fullname" value="<?php echo $fullname; ?>">
                     <span id="fullnameError" style="color: red;"></span>
                 </div>
 
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" value="<?php echo $email; ?>" >
+                    <input type="email" class="form-control" id="email" name="email" value="<?php echo $email; ?>">
                     <span id="emailError" style="color: red;"></span>
                 </div>
 
@@ -98,7 +101,7 @@ if (isset($_GET['id'])) {
                 <a href="index.php?act=listuser" type="button" class="btn btn-danger">Hủy</a>
                 <button class="btn btn-primary" name="updateUser">Sửa</button>
             </form>
-            <script src="/validate/validateuser.js"></script>
+            <script src="../validate/validateuser.js"></script>
             <!-- Thêm link JavaScript của Bootstrap (nếu cần) -->
             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

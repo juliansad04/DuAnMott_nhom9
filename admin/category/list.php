@@ -26,6 +26,7 @@ if (isset($_GET['mess'])) {
                 <?php
                 foreach ($listcate as $cate) {
                     echo "<tr>";
+                    echo "<tr style='background-color: #fff;'>";
                     echo "<td>" . $cate['id'] . "</td>";
                     echo "<td>" . $cate['name'] . "</td>";
                     echo "<td class='text-center'>";

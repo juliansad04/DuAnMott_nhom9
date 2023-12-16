@@ -96,9 +96,7 @@
                                     <div class="content">
                                         <div class="img-right-pro">
                                             <a href="sanpham.php">
-                                                <img class="lazy img-pro content-image"
-                                                     src="./admin/uploads/<?php echo $productItem['image']; ?>"
-                                                     alt="<?php echo $productItem['name']; ?>">
+                                                <img class="lazy img-pro content-image" src="./admin/uploads/<?php echo $productItem['image']; ?>" alt="<?php echo $productItem['name']; ?>">
                                             </a>
                                             <div class="content-overlay"></div>
                                             <div class="content-details fadeIn-top">
@@ -117,15 +115,22 @@
                                             </a>
                                         </div>
                                         <div class="add_card">
-                                            <button type="button"
-                                                    onclick="<?php echo isset($_SESSION['id']) ? 'addToCart(' . $productItem['id'] . ');' : 'alertWaring()'; ?>">
-                                                <i class="fa fa-shopping-cart" aria-hidden="true"></i> Đặt hàng
-                                            </button>
+                                            <?php if ($productItem['quantity'] > 0) { ?>
+                                                <button type="button" onclick="<?php echo isset($_SESSION['id']) ? 'addToCart(' . $productItem['id'] . ');' : 'alertWaring()'; ?>">
+                                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i> Đặt hàng
+                                                </button>
+                                            <?php } else { ?>
+
+                                                <span class="out-of-stock">
+                                                        <div class="cach" style="padding: 10px;">Hết
+                                                            hàng</div>
+                                                    </span>
+                                            <?php } ?>
                                         </div>
                                         <div class="price_old_new">
                                             <div class="price">
-                                            <span class="news_price"><?php echo number_format($productItem['price']); ?>
-                                                vnd</span>
+                                                <span class="news_price"><?php echo number_format($productItem['price'], 0, ',', '.') ?> VNĐ</span>
+
                                             </div>
                                         </div>
                                     </div>

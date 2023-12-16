@@ -18,6 +18,7 @@
                 <?php
                 foreach ($listOrderDetail as $order) {
                     echo "<tr>";
+                    echo "<tr style='background-color: #fff;'>";
                     echo "<td>" . $order['id'] . "</td>";
 
                     $userId = $order['user_id'];
@@ -58,3 +59,52 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var statusSelects = document.getElementsByName('status');
+        var updateButtons = document.getElementsByName('updateOrderOnline');
+
+        // Iterate through all sets of elements
+        for (var i = 0; i < statusSelects.length; i++) {
+            var statusSelect = statusSelects[i];
+            var updateButton = updateButtons[i];
+
+            // Lưu trạng thái ban đầu để so sánh sau khi cập nhật
+            var initialStatus = statusSelect.value;
+
+            // Store the initial status separately for each order
+            statusSelect.dataset.initialStatus = initialStatus;
+
+            updateButton.addEventListener('click', function () {
+                // Update the initial status only when the update button is clicked
+                var currentStatusSelect = this.parentNode.querySelector('[name="status"]');
+                currentStatusSelect.dataset.initialStatus = currentStatusSelect.value;
+            });
+
+            statusSelect.addEventListener('change', function () {
+                var selectedStatus = this.value;
+                var initialStatus = this.dataset.initialStatus;
+
+                // Kiểm tra và chỉ cho phép cập nhật nếu trạng thái thay đổi theo quy tắc
+                if (!canUpdateStatus(initialStatus, selectedStatus)) {
+                    alert('Không thể chọn lại trạng thái đã được chọn!');
+                    this.value = initialStatus; // Đặt lại trạng thái ban đầu
+                }
+            });
+        }
+    });
+
+    // Hàm kiểm tra có thể cập nhật trạng thái hay không
+    function canUpdateStatus(initialStatus, selectedStatus) {
+        var statusMap = {
+            'Chưa xác nhận': 0,
+            'Đã xác nhận': 1,
+            'Chuẩn bị giao hàng': 2,
+            'Đang giao hàng': 3,
+            'Thành công': 4
+        };
+
+        return statusMap[selectedStatus] >= statusMap[initialStatus];
+    }
+</script>

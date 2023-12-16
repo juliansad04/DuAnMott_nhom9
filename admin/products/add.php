@@ -10,7 +10,7 @@
 
 <body>
 
-<div class="container mt-5" >
+<div class="container mt-5">
     <h2 class="mb-4">Thêm mới sản phẩm</h2>
 
     <form method="post" enctype="multipart/form-data" onsubmit="return validateProduct()">
@@ -52,11 +52,17 @@
             <input type="file" class="form-control-file" id="image" name="image" accept="image/*">
             <span id="imageError" style="color: red;"></span>
         </div>
+        <div class="form-group">
+            <label for="quantity">Số lượng</label>
+            <input type="text" class="form-control" id="quantity" name="quantity">
+            <span id="quantityError" style="color: red;"></span>
+        </div>
+
 
         <a href="index.php?act=listproducts" type="button" class="btn btn-danger">Hủy</a>
         <button class="btn btn-primary" name="addProduct">Thêm</button>
     </form>
-    <script src="/validate/validateproduct.js"></script>
+    <script src="../validate/validateproduct.js"></script>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

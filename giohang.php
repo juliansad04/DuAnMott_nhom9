@@ -201,23 +201,32 @@ if (isset($_SESSION['id'])) {
                                             <h4 class="nomargin"><?php echo $cartItem['product_id']; ?></h4>
                                         </div>
                                     </td>
-                                    <td data-th="Giá"><span class="color_red font_money"><?php echo $cartItem['price']; ?></span>
+                                    <td data-th="Giá"><span class="color_red font_money"><?php echo number_format($cartItem['price'], 0, ',', '.') ?> VNĐ</span></td>
+
                                     </td>
                                     <form action="./handler/update_cart_item_quantity.php" method="POST">
                                         <td data-th="Số lượng">
                                             <div class="clear margintop5">
-                                                <div class="floatleft"><input type="number" class="inputsoluong" name="newQuantity" value="<?php echo $cartItem['quantity']; ?>">
+                                                <div class="floatleft">
+                                                    <?php
+                                                    $minQuantity = 1;
+                                                    $currentQuantity = $cartItem['quantity'];
+                                                    $displayQuantity = max($minQuantity, $currentQuantity);
+                                                    ?>
+                                                    <input type="number" class="inputsoluong" name="newQuantity" value="<?php echo $displayQuantity; ?>" min="<?php echo $minQuantity; ?>">
                                                 </div>
                                                 <input type="hidden" name="cartItemId" value="<?php echo $cartItem['id']; ?>">
                                                 <div class="floatleft width50">
                                                     <button class="btn_df btn_table_td_rf_del btn-sm">
-                                                        <i class="fa fa-refresh"></i></button>
+                                                        <i class="fa fa-refresh"></i>
+                                                    </button>
                                                 </div>
                                             </div>
                                             <div class="clear"></div>
                                         </td>
                                     </form>
-                                    <td data-th="Thành tiền" class="text_center"><span class="color_red font_money"><?php echo $cartItem['total_price']; ?></span>
+
+                                    <td data-th="Thành tiền" class="text_center"><span class="color_red font_money"><?php echo number_format($cartItem['total_price'], 0, ',', '.') ?> VNĐ</span></td>
                                     </td>
                                     <td class="actions aligncenter" data-th="">
                                         <a onclick="return del(<?php echo $cartItem['id']; ?>, '<?php echo $cartItem['product_name']; ?>');" class="btn_df btn_table_td_rf_del btn-sm"><i class="fa fa-trash-o"></i>

@@ -33,6 +33,7 @@ if (isset($_GET['mess'])) {
                 <?php
                 foreach ($listuser as $user) {
                     echo "<tr>";
+                    echo "<tr style='background-color: #fff;'>";
                     echo "<td>" . $user['id'] . "</td>";
                     echo "<td>" . $user['username'] . "</td>";
                     echo "<td>" . $user['fullname'] . "</td>";

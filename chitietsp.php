@@ -40,6 +40,7 @@
             $productDescription = $productDetails['description'];
             $productPrice = $productDetails['price'];
             $productImage = $productDetails['image'];
+            $productQuantity = $productDetails['quantity'];
         }
     }
     ?>
@@ -93,19 +94,19 @@
                                 </div>
                             </div>
 
-                            <div id="sync2" class="owl-carousel owl-theme">
-                                <div class="item">
-                                    <img src="./admin/uploads/<?php echo $productImage ?>" width="100%">
-                                </div>
-                                <div class="item">
-                                    <img src="./admin/uploads/<?php echo $productImage ?>" width="100%">
-                                </div>
+                            <!-- <div id="sync2" class="owl-carousel owl-theme">
+                                    <div class="item">
+                                        <img src="./admin/uploads/<?php echo $productImage ?>" width="100%">
+                                    </div>
+                                    <div class="item">
+                                        <img src="./admin/uploads/<?php echo $productImage ?>" width="100%">
+                                    </div>
 
-                                <div class="item">
-                                    <img src="./admin/uploads/<?php echo $productImage ?>" width="100%">
-                                </div>
+                                    <div class="item">
+                                        <img src="./admin/uploads/<?php echo $productImage ?>" width="100%">
+                                    </div>
 
-                            </div>
+                                </div> -->
 
                         </div>
                         <div class="content-des-pro">
@@ -123,7 +124,7 @@
                                     </div>
                                     <div class="color_price">
                                         <span class="title_price bg_green">Giá bán</span>
-                                        <?php echo $productPrice ?><span>vnđ</span>.
+                                        <?php echo number_format($productPrice, 0, ',', '.') ?><span>vnđ</span>
                                         (GIÁ CHƯA VAT)
                                         <div class="clear"></div>
                                     </div>
@@ -161,10 +162,12 @@
                                     <div class="clear"></div>
                                 </div> -->
                                 <div class="wp_a">
-                                    <a onclick="<?php echo isset($_SESSION['id']) ? 'addToCart(' . $productId . ');' : 'alertWaring()'; ?>"
-                                       class="view_duan">
-                                        <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span
-                                                class="text-mobile-buy">Mua hàng</span>
+                                    <a <?php echo $productQuantity > 0 ? 'onclick="addToCart(' . $productId . ');"' : 'class="out-of-stock"'; ?>
+                                            class="view_duan">
+                                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                        <span class="text-mobile-buy">
+                                                <?php echo $productQuantity > 0 ? 'Mua hàng' : 'Hết hàng'; ?>
+                                            </span>
                                     </a>
                                     <a href="tel:090 66 99 038" class="view_duan">
                                         <i class="fa fa-phone" aria-hidden="true"></i> <span
@@ -366,8 +369,8 @@
                     <div class="tab_link">
                         <h3 class="title_tab_link">TAGS: </h3>
                         <div class="content_tab_link">
-                            <a href="tag/">Mì</a>
-                            <a href="tag/">Mì ăn liền</a>
+                            <a href="#">Mì</a>
+                            <a href="#">Mì ăn liền</a>
                         </div>
                     </div>
                 </div>
@@ -382,11 +385,11 @@
                     </div>
                 </div>
                 <div class="pro_all_gird">
-                    <div class="girds_all list_all_other_page ">
+                    <div class="girds_all list_all_other_page">
                         <?php
-                        $productsMyLyInCategory = $product->getProductsByCategory(8);
+                        $productsRelated = $product->getProductsByCategory($productDetails['category_id']);
                         $counter = 0;
-                        foreach ($productsMyLyInCategory as $productMyLy) {
+                        foreach ($productsRelated as $productRelated) {
                             if ($counter >= 5) {
                                 break;
                             }
@@ -395,38 +398,43 @@
                                 <div class="grids_in">
                                     <div class="content">
                                         <div class="img-right-pro">
-                                            <a href="sanpham.php">
+                                            <a href="chitietsp.php?id=<?php echo $productRelated['id']; ?>">
                                                 <img class="lazy img-pro content-image"
-                                                     src="./admin/uploads/<?php echo $productMyLy['image']; ?>"
-                                                     alt="<?php echo $productMyLy['name']; ?>">
+                                                     src="./admin/uploads/<?php echo $productRelated['image']; ?>"
+                                                     alt="<?php echo $productRelated['name']; ?>">
                                             </a>
                                             <div class="content-overlay"></div>
                                             <div class="content-details fadeIn-top">
                                                 <ul class="details-product-overlay">
                                                     <?php
                                                     $cate = new Category();
-                                                    $objCate = $cate->getCategoryById($productMyLy['category_id']);
+                                                    $objCate = $cate->getCategoryById($productRelated['category_id']);
                                                     ?>
                                                     <li><?php echo $objCate['name']; ?></li>
                                                 </ul>
                                             </div>
                                         </div>
                                         <div class="name-pro-right">
-                                            <a href="chitietsp.php?id=<?php echo $productMyLy['id']; ?>">
-                                                <h3><?php echo $productMyLy['name']; ?></h3>
+                                            <a href="chitietsp.php?id=<?php echo $productRelated['id']; ?>">
+                                                <h3><?php echo $productRelated['name']; ?></h3>
                                             </a>
                                         </div>
                                         <div class="add_card">
-                                            <button type="button"
-                                                    onclick="<?php echo isset($_SESSION['id']) ? 'addToCart(' . $productMyLy['id'] . ');' : 'alertWaring()'; ?>">
-                                                <i class="fa fa-shopping-cart" aria-hidden="true"></i> Đặt hàng
-                                            </button>
+                                            <?php if ($productRelated['quantity'] > 0) { ?>
+                                                <button type="button"
+                                                        onclick="<?php echo isset($_SESSION['id']) ? 'addToCart(' . $productRelated['id'] . ');' : 'alertWaring()'; ?>">
+                                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i> Đặt hàng
+                                                </button>
+                                            <?php } else { ?>
+                                                <span class="out-of-stock"> <div class="cach" style="padding: 10px;">Hết
+                                                            hàng</div></span>
+                                            <?php } ?>
                                         </div>
+
                                         <div class="price_old_new">
                                             <div class="price">
-                                                <span
-                                                        class="news_price"><?php echo number_format($productMyLy['price']); ?>
-                                                    vnd</span>
+                                <span class="news_price"><?php echo number_format($productRelated['price'], 0, ',', '.') ?>
+                                    vnd</span>
                                             </div>
                                         </div>
                                     </div>
@@ -442,12 +450,11 @@
                 </div>
                 <div class="clear"></div>
             </div>
-        </div>
 
-        <!--end:left-->
+            <!--end:left-->
+            <div class="clear"></div>
+        </div>
         <div class="clear"></div>
-    </div>
-    <div class="clear"></div>
     </div>
     <script>
         jQuery(document).ready(function() {

@@ -66,7 +66,7 @@
     </form>
 </div>
 
-<script src="/validate/validateuser.js"></script>
+<script src="../validate/validateuser.js"></script>
 
 
 <!-- Thêm link JavaScript của Bootstrap (nếu cần) -->

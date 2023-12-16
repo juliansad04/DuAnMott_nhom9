@@ -7,7 +7,7 @@ class Product
     var $description = null;
     var $price = null;
     var $image = null;
-
+    var $quantity = null;
     var $category = null;
 
     function getProducts()
@@ -32,27 +32,27 @@ class Product
         $result = $db->pdo_query_one($select, $productId);
         return $result;
     }
-    function insertProduct($name, $description, $price, $image, $categoryId)
+    function insertProduct($name, $description, $price, $image, $categoryId, $quantity)
     {
         $db = new connect();
-        $query = "INSERT INTO products (name, description, price, image, category_id) VALUES (?, ?, ?, ?, ?)";
-        $newProductId = $db->pdo_execute($query, $name, $description, $price, $image, $categoryId);
+        $query = "INSERT INTO products (name, description, price, image, category_id, quantity) VALUES (?, ?, ?, ?, ?, ?)";
+        $newProductId = $db->pdo_execute($query, $name, $description, $price, $image, $categoryId, $quantity);
         echo "Inserted product with ID: " . $newProductId;
     }
 
-    function updateProduct($tmpId, $tmpName, $tmpDescription, $tmpPrice, $tmpImage, $categoryId)
+    function updateProduct($tmpId, $tmpName, $tmpDescription, $tmpPrice, $tmpImage, $categoryId, $tmpQuantity)
     {
         $db = new connect();
 
         if (!empty($tmpImage)) {
-            $query = "UPDATE products SET name=?, description=?, price=?, image=?, category_id=? WHERE id=?";
-            $db->pdo_execute($query, $tmpName, $tmpDescription, $tmpPrice, $tmpImage, $categoryId, $tmpId);
+            $query = "UPDATE products SET name=?, description=?, price=?, image=?, category_id=?, quantity=? WHERE id=?";
+            $db->pdo_execute($query, $tmpName, $tmpDescription, $tmpPrice, $tmpImage, $categoryId, $tmpQuantity, $tmpId);
 
             $upload_dir = './uploads/';
             move_uploaded_file($tmpImage, $upload_dir . $tmpImage);
         } else {
-            $query = "UPDATE products SET name=?, description=?, price=?, category_id=? WHERE id=?";
-            $db->pdo_execute($query, $tmpName, $tmpDescription, $tmpPrice, $categoryId, $tmpId);
+            $query = "UPDATE products SET name=?, description=?, price=?, category_id=?, quantity=? WHERE id=?";
+            $db->pdo_execute($query, $tmpName, $tmpDescription, $tmpPrice, $categoryId, $tmpQuantity, $tmpId);
         }
     }
 
@@ -92,5 +92,6 @@ class Product
         $partialName = '%' . $partialName . '%';
         return $db->pdo_query($select, $partialName);
     }
+
 }
 ?>

@@ -1,6 +1,7 @@
 <?php
 include("./admin/products/products.php");
 $product = new Product();
+
 ?>
 
 <!DOCTYPE html>
@@ -33,7 +34,7 @@ $product = new Product();
         <div class="module_pro_all">
             <div class="box-title">
                 <div class="title-bar">
-                    <h1>Mì Ly</h1>
+                    <h1>Mì gói</h1>
                     <a class="read_more" href="sanpham.php">
                         Xem thêm
                     </a>
@@ -82,9 +83,8 @@ $product = new Product();
                                     </div>
                                     <div class="price_old_new">
                                         <div class="price">
-                                            <span
-                                                    class="news_price"><?php echo number_format($productMyGoi['price']); ?>
-                                                vnd</span>
+                                            <span class="news_price"><?php echo number_format($productMyGoi['price'], 0, ',', '.') ?> VNĐ</span>
+
                                         </div>
                                     </div>
                                 </div>
@@ -103,7 +103,7 @@ $product = new Product();
         <div class="module_pro_all">
             <div class="box-title">
                 <div class="title-bar">
-                    <h1>Mì Tô</h1>
+                    <h1>Mì ly</h1>
                     <a class="read_more" href="sanpham.php">
                         Xem thêm
                     </a>
@@ -153,8 +153,7 @@ $product = new Product();
                                     </div>
                                     <div class="price_old_new">
                                         <div class="price">
-                                            <span class="news_price"><?php echo number_format($productMyLy['price']); ?>
-                                                vnd</span>
+                                            <span class="news_price"><?php echo number_format($productMyLy['price'], 0, ',', '.') ?> VNĐ</span>
                                         </div>
                                     </div>
                                 </div>
@@ -174,7 +173,7 @@ $product = new Product();
         <div class="module_pro_all">
             <div class="box-title">
                 <div class="title-bar">
-                    <h1>Mì Gói</h1>
+                    <h1>Mì tô</h1>
                     <a class="read_more" href="sanpham.php">
                         Xem thêm
                     </a>
@@ -223,8 +222,8 @@ $product = new Product();
                                     </div>
                                     <div class="price_old_new">
                                         <div class="price">
-                                            <span class="news_price"><?php echo number_format($productMiTo['price']); ?>
-                                                vnd</span>
+                                            <span class="news_price"><?php echo number_format($productMiTo['price'], 0, ',', '.') ?> VNĐ</span>
+
                                         </div>
                                     </div>
                                 </div>

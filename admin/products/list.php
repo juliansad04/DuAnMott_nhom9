@@ -20,9 +20,10 @@ if (isset($_GET['mess'])) {
                 <tr>
                     <th scope="col">STT</th>
                     <th scope="col">Tên sản phẩm</th>
-                    <th scope="col" style="width: 450px;">Mô tả</th>
-                    <th scope="col">Giá</th>
-                    <th scope="col">Hình ảnh</th>
+                    <th scope="col" style="width: 350px;">Mô tả</th>
+                    <th scope="col" style="width: 120px;">Giá</th>
+                    <th scope="col" style="width: 100px;">Hình ảnh</th>
+                    <th scope="col" style="width: 100px;">Số lượng</th>
                     <th scope="col" width='25%'>Chức năng</th>
                 </tr>
                 </thead>
@@ -33,6 +34,7 @@ if (isset($_GET['mess'])) {
 
                 foreach ($listProducts as $product) {
                     echo "<tr>";
+                    echo "<tr style='background-color: #fff;'>";
                     echo "<td>" . $product['id'] . "</td>";
                     echo "<td>" . $product['name'] . "</td>";
                     echo "<td>" . $product['description'] . "</td>";
@@ -43,7 +45,7 @@ if (isset($_GET['mess'])) {
                     } else {
                         echo "<td style='text-align: center; vertical-align: middle;'>Không có hình</td>";
                     }
-
+                    echo "<td>" . $product['quantity'] . "</td>";
                     echo "<td class='d-flex justify-content-evenly'>";
                     echo "<a href='./index.php?act=updateproduct&id=". $product['id'] ."' class='btn btn-info text-white'>Sửa</a>";
                     echo "<button type='button' onclick='confirmDelete(" . $product['id'] . ")' class='btn btn-danger text-white'>Xoá</button>";

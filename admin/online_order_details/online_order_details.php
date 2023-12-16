@@ -27,6 +27,8 @@ class OnlineOrderDetail
     {
         $db = new Connect();
         $query = "INSERT INTO online_order_details (online_order_id, product_id, quantity, total_price) VALUES (?, ?, ?, ?)";
+        $updateQuantityQuery = "UPDATE products SET quantity = quantity - ? WHERE id = ?";
+        $db->pdo_execute($updateQuantityQuery, $quantity, $productId);
         return $db->pdo_execute($query, $onlineOrderId, $productId, $quantity, $totalPrice);
     }
 
