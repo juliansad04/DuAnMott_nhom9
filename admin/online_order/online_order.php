@@ -16,12 +16,12 @@ class OnlineOrder
         return $db->pdo_query_one($select, $onlineOrderId);
     }
 
-    public function createOnlineOrder($userId, $orderDate, $customerName, $customerAddress, $sdt, $email, $noiDung)
+    public function createOnlineOrder($userId, $orderDate, $customerName, $customerAddress, $sdt, $email, $noiDung, $paymentMethod = 'Thanh toán khi nhận hàng')
     {
         $db = new Connect();
-        $query = "INSERT INTO online_orders (user_id, order_date, customer_name, address, sdt, email, noi_dung, status) 
-                  VALUES (?, ?, ?, ?, ?, ?, ?, 'Chưa xác nhận')";
-        return $db->pdo_execute($query, $userId, $orderDate, $customerName, $customerAddress, $sdt, $email, $noiDung);
+        $query = "INSERT INTO online_orders (user_id, order_date, customer_name, address, sdt, email, noi_dung, status, payment_method) 
+              VALUES (?, ?, ?, ?, ?, ?, ?, 'Chưa xác nhận', ?)";
+        return $db->pdo_execute($query, $userId, $orderDate, $customerName, $customerAddress, $sdt, $email, $noiDung, $paymentMethod);
     }
 
 
@@ -95,7 +95,4 @@ class OnlineOrder
 
         return $result ? $result['total_profit'] : 0;
     }
-
 }
-
-?>

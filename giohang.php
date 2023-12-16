@@ -149,11 +149,11 @@ if (isset($_SESSION['id'])) {
                             <meta itemprop="position" content="1" />
                         </li>
                         <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-                                <span itemprop="item">
-                                    <strong itemprop="name">
-                                        Giỏ hàng
-                                    </strong>
-                                </span>
+                            <span itemprop="item">
+                                <strong itemprop="name">
+                                    Giỏ hàng
+                                </strong>
+                            </span>
                             <meta itemprop="position" content="2" />
                         </li>
                     </ol>
@@ -188,7 +188,9 @@ if (isset($_SESSION['id'])) {
                                 ?>
                                 <tr class="tr">
                                     <td data-th="Hình ảnh">
-                                        <div class="col_table_image col_table_hidden-xs"><img src="./admin/uploads/<?php echo $cartItem['image_url']; ?>" alt="<?php echo $cartItem['product_name']; ?>" class="img-responsive" />
+                                        <div class="col_table_image col_table_hidden-xs"><img
+                                                    src="./admin/uploads/<?php echo $cartItem['image_url']; ?>"
+                                                    alt="<?php echo $cartItem['product_name']; ?>" class="img-responsive" />
                                         </div>
                                     </td>
                                     <td data-th="Sản phẩm">
@@ -201,7 +203,9 @@ if (isset($_SESSION['id'])) {
                                             <h4 class="nomargin"><?php echo $cartItem['product_id']; ?></h4>
                                         </div>
                                     </td>
-                                    <td data-th="Giá"><span class="color_red font_money"><?php echo number_format($cartItem['price'], 0, ',', '.') ?> VNĐ</span></td>
+                                    <td data-th="Giá"><span
+                                                class="color_red font_money"><?php echo number_format($cartItem['price'], 0, ',', '.') ?>
+                                            VNĐ</span></td>
 
                                     </td>
                                     <form action="./handler/update_cart_item_quantity.php" method="POST">
@@ -225,11 +229,13 @@ if (isset($_SESSION['id'])) {
                                             <div class="clear"></div>
                                         </td>
                                     </form>
-
-                                    <td data-th="Thành tiền" class="text_center"><span class="color_red font_money"><?php echo number_format($cartItem['total_price'], 0, ',', '.') ?> VNĐ</span></td>
+                                    <td data-th="Thành tiền" class="text_center"><span
+                                                class="color_red font_money"><?php echo number_format($cartItem['total_price'], 0, ',', '.') ?>
+                                            VNĐ</span></td>
                                     </td>
                                     <td class="actions aligncenter" data-th="">
-                                        <a onclick="return del(<?php echo $cartItem['id']; ?>, '<?php echo $cartItem['product_name']; ?>');" class="btn_df btn_table_td_rf_del btn-sm"><i class="fa fa-trash-o"></i>
+                                        <a onclick="return del(<?php echo $cartItem['id']; ?>, '<?php echo $cartItem['product_name']; ?>');"
+                                           class="btn_df btn_table_td_rf_del btn-sm"><i class="fa fa-trash-o"></i>
                                             <span class="display_mobile">Xóa sản phẩm</span></a>
                                     </td>
                                 </tr>
@@ -240,7 +246,8 @@ if (isset($_SESSION['id'])) {
                                 <td colspan="7" class="textright_text">
                                     <div class="sum_price_all">
                                         <span class="text_price">Tổng tiền thành toán</span>:
-                                        <span class="text_price color_red"><?php echo $cartDetails['cart']['total_price']; ?></span>
+                                        <span
+                                                class="text_price color_red"><?php echo $cartDetails['cart']['total_price']; ?></span>
                                     </div>
                                 </td>
                             </tr>
@@ -248,7 +255,8 @@ if (isset($_SESSION['id'])) {
                             <tfoot>
                             <tr class="tr_last">
                                 <td colspan="7">
-                                    <a href="." class="btn_df btn_table floatleft"><i class="fa fa-long-arrow-left"></i> Tiếp tục mua hàng</a>
+                                    <a href="." class="btn_df btn_table floatleft"><i
+                                                class="fa fa-long-arrow-left"></i> Tiếp tục mua hàng</a>
                                     <div class="clear"></div>
                                 </td>
                             </tr>
@@ -289,7 +297,8 @@ if (isset($_SESSION['id'])) {
                                             <div class="row">
                                                 <div class="input">
                                                     <label>Số điện thoại: <span style="color:red;">*</span></label>
-                                                    <input type="text" name="txtDienThoai" id="txtDienThoai" oninput="validatePhoneNumber(this)">
+                                                    <input type="text" name="txtDienThoai" id="txtDienThoai"
+                                                           oninput="validatePhoneNumber(this)">
                                                 </div>
                                                 <div class="clear"></div>
                                             </div>
@@ -305,7 +314,8 @@ if (isset($_SESSION['id'])) {
                                             <div class="row">
                                                 <div class="input">
                                                     <label>Email: <span style="color:red;">*</span></label>
-                                                    <input type="text" name="txtEmail" id="txtEmail" onchange="return KiemTraEmail(this)">
+                                                    <input type="text" name="txtEmail" id="txtEmail"
+                                                           onchange="return KiemTraEmail(this)">
                                                 </div>
                                                 <div class="clear"></div>
                                             </div>
@@ -313,14 +323,20 @@ if (isset($_SESSION['id'])) {
                                             <div class="row">
                                                 <div class="input">
                                                     <label>Nội dung: <span style="color:red;">*</span></label>
-                                                    <textarea type="text" name="txtNoiDung" id="txtNoiDung" class="clsipa"></textarea>
+                                                    <textarea type="text" name="txtNoiDung" id="txtNoiDung"
+                                                              class="clsipa"></textarea>
                                                 </div>
                                                 <div class="clear"></div>
                                             </div>
 
                                             <div class="row btnclass">
                                                 <div class="input ipmaxn">
-                                                    <input type="submit" class="btn-gui" name="place_order" id="place_order" value="Gửi đơn hàng" onclick="return KiemTra()">
+                                                    <input type="submit" class="btn-gui" name="place_order"
+                                                           id="place_order" value="Thanh toán khi nhận hàng"
+                                                           onclick="return KiemTra()">
+                                                    <input type="submit" class="btn-gui" name="place_order_online"
+                                                           id="place_order" value="Thanh toán online"
+                                                           onclick="return KiemTra()">
                                                     <input type="reset" class="btn-gui" value="Nhập lại">
                                                 </div>
                                                 <div class="clear"></div>

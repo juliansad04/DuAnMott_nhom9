@@ -26,7 +26,7 @@
         <p class="mb-0">Vui lòng quay lại và thử lại.</p>
     </div>
     <div class="text-center mt-3">
-        <a href="./" class="btn btn-secondary">Quay lại trang chủ</a>
+        <a href="../" class="btn btn-secondary">Quay lại trang chủ</a>
     </div>
 </div>
 
