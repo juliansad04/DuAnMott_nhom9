@@ -24,8 +24,8 @@ $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
 $orderId = time() . "";
 $orderInfo = "Thanh toán đơn hàng cho shop mifgois";
 $amount = $_SESSION['order_info']['totalPrice'];
-$redirectUrl = "http://localhost/migoiweb/handler/xac-nhan-dat-hang.php";
-$ipnUrl = "http://localhost/migoiweb/handler/xac-nhan-dat-hang.php";
+$redirectUrl = "http://localhost/DuAnMott_nhom9/handler/xac-nhan-dat-hang.php";
+$ipnUrl = "http://localhost/DuAnMott_nhom9/handler/xac-nhan-dat-hang.php";
 $extraData = "mifgois";
 
 
