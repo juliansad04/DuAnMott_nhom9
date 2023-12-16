@@ -47,8 +47,8 @@
         foreach ($orderDetails as $detail) {
             echo "<li class='list-group-item'>" . $detail['quantity'] . " x " . $detail['product_id'] . " - Thành tiền: " . number_format($detail['total_price'], 2) . "</li>";
         }
-        echo "</ul>";
-
+        echo "<p>Trạng thái đơn hàng: " . $order['status'] . "</p>";
+        echo "<hr>";
         echo "</div>";
         echo "</div>";
     }
