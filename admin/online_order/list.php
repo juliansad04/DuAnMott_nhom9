@@ -10,6 +10,7 @@
                     <th scope="col">#</th>
                     <th scope="col">Tài khoản</th>
                     <th scope="col">Tên khách hàng</th>
+                    <th scope="col">Phương thức thanh toán</th>
                     <th scope="col">Ngày đặt hàng</th>
                     <th scope="col" width='45%'>Chức năng</th>
                 </tr>
@@ -26,6 +27,7 @@
                     $name = $userOrder['username'];
                     echo "<td>" .  $name  . "</td>";
                     echo "<td>" . $order['customer_name'] . "</td>";
+                    echo "<td>" . $order['payment_method'] . "</td>";
                     echo "<td>" . $order['order_date'] . "</td>";
 
                     echo "<td class='d-flex justify-content-evenly'>";
@@ -61,7 +63,7 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         var statusSelects = document.getElementsByName('status');
         var updateButtons = document.getElementsByName('updateOrderOnline');
 
@@ -76,13 +78,13 @@
             // Store the initial status separately for each order
             statusSelect.dataset.initialStatus = initialStatus;
 
-            updateButton.addEventListener('click', function () {
+            updateButton.addEventListener('click', function() {
                 // Update the initial status only when the update button is clicked
                 var currentStatusSelect = this.parentNode.querySelector('[name="status"]');
                 currentStatusSelect.dataset.initialStatus = currentStatusSelect.value;
             });
 
-            statusSelect.addEventListener('change', function () {
+            statusSelect.addEventListener('change', function() {
                 var selectedStatus = this.value;
                 var initialStatus = this.dataset.initialStatus;
 
