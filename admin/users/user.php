@@ -53,18 +53,40 @@ class user
     {
         $db = new connect();
 
-        $tmpaddress = ($tmpaddress !== null) ? $tmpaddress : 'default_address';
+        $queryCheckUsername = "SELECT COUNT(*) FROM users WHERE username = ?";
+        $resultUsername = $db->pdo_query($queryCheckUsername, $tmpusername);
 
-        $tmpphone = ($tmpphone !== null) ? $tmpphone : 'default_phone';
+        $countUsername = $resultUsername[0]["COUNT(*)"];
 
-        $query = "INSERT INTO users(id, username, password, fullname, email, avatar, address, phone, role) VALUES (NULL, ?, ?, ?, ?, COALESCE(?, 'path_to_default_avatar'), ?, ?, 0)";
+        if ($countUsername > 0) {
+            $message = "Tên người dùng đã tồn tại. Vui lòng chọn tên người dùng khác.";
+            return $message;
+        }
 
-        $newUserId = $db->pdo_execute($query, $tmpusername, $tmppassword, $tmpname, $tmpemail, $tmpavatar, $tmpaddress, $tmpphone);
+        $queryCheckEmail = "SELECT COUNT(*) FROM users WHERE email = ?";
+        $resultEmail = $db->pdo_query($queryCheckEmail, $tmpemail);
 
-        return $newUserId;
+        $countEmail = $resultEmail[0]["COUNT(*)"];
+
+        if ($countEmail > 0) {
+            $message = "Email đã tồn tại. Vui lòng sử dụng địa chỉ email khác.";
+            return $message;
+        }
+
+        $tmpaddress = $tmpaddress ?: 'default_address';
+        $tmpphone = $tmpphone ?: 'default_phone';
+
+        $queryInsertUser = "INSERT INTO users(id, username, password, fullname, email, avatar, address, phone, role) VALUES (NULL, ?, ?, ?, ?, COALESCE(?, 'path_to_default_avatar'), ?, ?, 0)";
+
+        $newUserId = $db->pdo_execute($queryInsertUser, $tmpusername, $tmppassword, $tmpname, $tmpemail, $tmpavatar, $tmpaddress, $tmpphone);
+
+        if ($newUserId) {
+            return $newUserId;
+        } else {
+            $message = "Lỗi khi thêm người dùng.";
+            return $message;
+        }
     }
-
-
 
 
 
@@ -123,5 +145,4 @@ class user
 
         return $result ? $result['user_count'] : 0;
     }
-
 }

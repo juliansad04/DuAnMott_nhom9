@@ -59,10 +59,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["register"])) {
     $password = trim($_POST["Password"]);
     $confirmPassword = trim($_POST["ConfirmPassword"]);
 
-
     $user = new user();
     $userId = $user->registerUser($username, $password, $username, $email, null, null, null);
-    if ($userId) {
+
+    if (is_numeric($userId)) {
         $cart = new Cart();
         $createdAt = date("Y-m-d H:i:s");
         $cartId = $cart->createCart($userId, $createdAt);
@@ -76,7 +76,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["register"])) {
             echo "Lỗi khi tạo giỏ hàng";
         }
     } else {
-        echo "Lỗi khi tạo tài khoản";
+        echo "<script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Đăng kí không thành công',
+                    text: '$userId',
+                    showConfirmButton: true,
+                }).then(() => {
+                    window.location.href = './'; 
+                });
+              </script>";
     }
     exit();
 }
@@ -194,6 +203,19 @@ function isValidUsername($username) {
 
                                 <ul>
 
+                                    <!-- <li><a href='sanpham.php'>Apple</a>
+                                                <ul>
+                                                    <li><a href='sanpham.php'>Iphone</a></li>
+                                                    <li><a href='sanpham.php'>Macbook</a></li>
+                                                </ul>
+                                            </li>
+
+                                            <li><a href='sanpham.php'>Samsung</a>
+                                                <ul>
+                                                    <li><a href='sanpham.php'>Samsung A</a></li>
+                                                    <li><a href='sanpham.php'>Samsung B</a></li>
+                                                </ul>
+                                            </li> -->
 
                                 </ul>
                             </li>
@@ -299,7 +321,7 @@ function isValidUsername($username) {
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     var inactivityTime = 0;
-    var logoutTime = 120; // thời gian đăng xuất sau 10 giây không hoạt động (có thể thay đổi)
+    var logoutTime = 120; // thời gian đăng xuất sau 120 giây không hoạt động (có thể thay đổi)
 
     function resetTimer() {
         inactivityTime = 0;
